@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soraka Constella - Cardápio</title>
+    <title>Soraka Constella - Cardápio de Páscoa</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,46 +18,36 @@
             </svg>
         </header>
 
-        <div class="category-menu" id="category-filter"></div>
+        <div class="category-menu" id="category-filter">
+            </div>
 
         <main id="product-list">
-            <p style="text-align: center; font-weight: bold;">Carregando...</p>
+            <p style="text-align: center; font-weight: bold;">Carregando delícias...</p>
         </main>
 
         <section class="info-section">
             <h2 class="info-title">Informações</h2>
             <div class="info-cards-wrapper">
-                <div class="info-card">
-                    <h3>Pagamentos</h3>
-                    <p>- Crédito<br>- PIX<br>- Dinheiro</p>
-                </div>
-                <div class="info-card">
-                    <h3>Contato</h3>
-                    <p>Beatriz Pereira<br>(11) 95342-5657</p> </div>
-                <div class="info-card">
-                    <h3>Sobre o chocolate</h3>
-                    <p>Chocolate nobre Sicao e Callebaut. Opções Zero Açúcar com Melken.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Sabores</h3>
-                    <p>Brigadeiro • Nutella<br>Maracujá • Coco</p>
-                </div>
+                <div class="info-card"><h3>Pagamentos</h3><p>Crédito • PIX • Dinheiro</p></div>
+                <div class="info-card"><h3>Contato</h3><p>Beatriz Pereira<br>(11) 95342-5657</p></div>
+                <div class="info-card"><h3>Chocolate</h3><p>Nobre Sicao e Callebaut. Zero Açúcar Melken.</p></div>
+                <div class="info-card"><h3>Sabores</h3><p>Brigadeiro • Nutella • Maracujá • Coco</p></div>
             </div>
             
             <div style="text-align: center; margin-top: 50px; padding-bottom: 30px;">
                 <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Política de Privacidade</a>
                 <span style="margin: 0 15px; opacity: 0.3;">|</span>
-                <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Painel Administrativo</a>
+                <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Área do Admin</a>
             </div>
         </section>
     </div>
 
     <div class="cart-bar" id="cart-bar">
-        <input type="text" id="order-notes" class="cart-notes-input" placeholder="Alguma observação no pedido?">
+        <input type="text" id="order-notes" class="cart-notes-input" placeholder="Deseja alguma observação no pedido?">
         <div class="cart-actions">
             <div class="cart-total">
-                <span style="font-size: 0.8rem; font-weight: 700;">Total:</span><br>
-                <strong id="total-price" style="font-size: 1.5rem;">R$ 0,00</strong>
+                <span>Total:</span><br>
+                <strong id="total-price">R$ 0,00</strong>
             </div>
             <a href="#" class="checkout-btn" id="checkout-btn" target="_blank">Fazer Pedido</a>
         </div>
