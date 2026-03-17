@@ -2,13 +2,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCl-7TW2qAIyCLAvvN54LyY7ubiXV9ajw0",
-    authDomain: "soraka-constella.firebaseapp.com",
-    projectId: "soraka-constella",
-    storageBucket: "soraka-constella.firebasestorage.app",
-    messagingSenderId: "593569822773",
-    appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
-    measurementId: "G-57JW68RKZL"
+  apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
+  authDomain: "soraka-constella.firebaseapp.com",
+  projectId: "soraka-constella",
+  storageBucket: "soraka-constella.firebasestorage.app",
+  messagingSenderId: "593569822773",
+  appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
+  measurementId: "G-57JW68RKZL"
 };
 
 const app = initializeApp(firebaseConfig);
