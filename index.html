@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soraka Constella - Páscoa 2026</title>
+    <title>Soraka Constella - Catálogo Digital</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,16 +23,21 @@
     <div class="container">
         <header class="stagger-item delay-1">
             <h1>Soraka Constella</h1>
-            <div class="subtitle">Cardápio de Páscoa</div>
-            <svg class="bunny-icon" onclick="triggerEasterEgg()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="subtitle">Catálogo Digital</div>
+            <svg class="bunny-icon" onclick="window.triggerEasterEgg()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 1.2-1.6L14 8h.1A5.9 5.9 0 0 1 20 14v3a4 4 0 0 1-2 4z"></path>
                 <path d="M13 14h.01"></path>
                 <path d="M12.5 8 10 3.5a1 1 0 1 0-1.7 1l2.5 4"></path>
             </svg>
         </header>
 
+        <div class="category-menu stagger-item delay-2" id="category-filter">
+            <button class="cat-btn active">Carregando...</button>
+        </div>
+
         <main id="product-list">
-            </main>
+            <p style="text-align: center;">Conectando com o servidor...</p>
+        </main>
 
         <section class="info-section stagger-item delay-5">
             <h2 class="info-title">Informações</h2>
@@ -47,8 +51,12 @@
                     <p>Beatriz<br>Whatsapp: (11) 95342-5657</p>
                 </div>
                 <div class="info-card">
-                    <h3>Sobre o chocolate</h3>
-                    <p>Todos os Ovos são feitos com chocolate nobre Sicao e Callebaut.<br>Versões sem açúcar é usado Melken.</p>
+                    <h3>Sobre nossos doces</h3>
+                    <p>Trabalhamos com ingredientes nobres Sicao e Callebaut.<br>Para versões sem açúcar, usamos Melken.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Sabores para Recheio</h3>
+                    <p>Brigadeiro • Coco • Baunilha<br>Caramelo • Caramelo Salgado<br>Nutella • Limão • Maracujá</p>
                 </div>
             </div>
             
@@ -59,7 +67,7 @@
     </div>
 
     <div class="cart-bar" id="cart-bar">
-        <input type="text" id="order-notes" class="cart-notes-input" placeholder="Observações? (Ex: Tradicional ao leite)" oninput="updateCartUI()">
+        <input type="text" id="order-notes" class="cart-notes-input" placeholder="Observações? (Ex: Tradicional ao leite)" oninput="window.updateCartUI()">
         <div class="cart-actions">
             <div class="cart-total">
                 <span>Total do pedido:</span>
@@ -72,7 +80,6 @@
         </div>
     </div>
 
-    <script src="produtos.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
