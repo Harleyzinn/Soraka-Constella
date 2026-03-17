@@ -15,45 +15,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Monitor de Login
+// VARIAVEIS DE CONTROLE
+let idParaApagar = null;
+const modal = document.getElementById('confirm-modal');
+
+// MONITOR DE LOGIN
 onAuthStateChanged(auth, (user) => {
-    const loginScr = document.getElementById('login-screen');
-    const dashScr = document.getElementById('dashboard-screen');
-    
-    if (user) {
-        if(loginScr) loginScr.style.display = 'none';
-        if(dashScr) dashScr.style.display = 'block';
-        loadAll();
-    } else {
-        if(loginScr) loginScr.style.display = 'block';
-        if(dashScr) dashScr.style.display = 'none';
-    }
+    document.getElementById('login-screen').style.display = user ? 'none' : 'block';
+    document.getElementById('dashboard-screen').style.display = user ? 'block' : 'none';
+    if(user) loadAll();
 });
 
-function loadAll() { loadGlobalConfig(); loadCategories(); loadProducts(); }
+function loadAll() { loadCategories(); loadProducts(); }
 
-// Botoes de Login/Sair
+// LOGIN / LOGOUT
 document.getElementById('btn-login').addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-password').value;
-    try { 
-        await signInWithEmailAndPassword(auth, email, pass); 
-    } catch (e) { 
-        alert("Erro no login: " + e.message);
-    }
+    try { await signInWithEmailAndPassword(auth, email, pass); } 
+    catch (e) { document.getElementById('login-error').style.display = 'block'; }
 });
 document.getElementById('btn-logout').addEventListener('click', () => signOut(auth));
 
-// CONFIGURAÇÃO DE DESCONTO
-async function loadGlobalConfig() {
-    const snap = await getDoc(doc(db, "configuracoes", "loja"));
-    if (snap.exists()) document.getElementById('global-discount').value = snap.data().descontoGlobal || 0;
-}
-document.getElementById('btn-save-config').addEventListener('click', async () => {
-    await setDoc(doc(db, "configuracoes", "loja"), { 
-        descontoGlobal: parseInt(document.getElementById('global-discount').value) || 0 
-    });
-    alert("Desconto salvo!");
+// MODAL LÓGICA
+window.abrirModal = (id) => { idParaApagar = id; modal.classList.add('open'); };
+document.getElementById('modal-cancel').addEventListener('click', () => modal.classList.remove('open'));
+document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+    if(idParaApagar) {
+        await deleteDoc(doc(db, "categorias", idParaApagar));
+        modal.classList.remove('open');
+        loadCategories();
+    }
 });
 
 // CATEGORIAS
@@ -63,11 +55,19 @@ async function loadCategories() {
     list.innerHTML = ''; select.innerHTML = '<option value="">Escolha...</option>';
     const snap = await getDocs(collection(db, "categorias"));
     snap.forEach(d => {
-        list.innerHTML += `<div class="product-item"><span>${d.data().nome}</span><button class="btn-delete" onclick="window.delCat('${d.id}')">Excluir</button></div>`;
-        select.innerHTML += `<option value="${d.data().nome}">${d.data().nome}</option>`;
+        const cat = d.data();
+        list.innerHTML += `
+            <div class="product-item">
+                <span style="font-weight:800">${cat.nome}</span>
+                <div class="category-actions">
+                    <button class="admin-btn btn-small btn-edit" onclick="window.startEdit('${d.id}', '${cat.nome}')">Editar</button>
+                    <button class="admin-btn btn-small danger" onclick="window.abrirModal('${d.id}')">Excluir</button>
+                </div>
+            </div>`;
+        select.innerHTML += `<option value="${cat.nome}">${cat.nome}</option>`;
     });
 }
-window.delCat = async (id) => { if(confirm("Apagar categoria?")) { await deleteDoc(doc(db, "categorias", id)); loadCategories(); } };
+
 document.getElementById('btn-add-category').addEventListener('click', async () => {
     const nome = document.getElementById('cat-nome').value;
     if(!nome) return;
@@ -75,21 +75,35 @@ document.getElementById('btn-add-category').addEventListener('click', async () =
     document.getElementById('cat-nome').value = ''; loadCategories();
 });
 
-// PRODUTOS
+// EDITAR CATEGORIA
+window.startEdit = (id, nome) => {
+    document.getElementById('form-add-category').style.display = 'none';
+    document.getElementById('form-edit-category').style.display = 'block';
+    document.getElementById('edit-cat-id').value = id;
+    document.getElementById('edit-cat-nome').value = nome;
+};
+
+document.getElementById('btn-cancel-edit-category').addEventListener('click', () => {
+    document.getElementById('form-add-category').style.display = 'block';
+    document.getElementById('form-edit-category').style.display = 'none';
+});
+
+document.getElementById('btn-save-edit-category').addEventListener('click', async () => {
+    const id = document.getElementById('edit-cat-id').value;
+    const novoNome = document.getElementById('edit-cat-nome').value;
+    await setDoc(doc(db, "categorias", id), { nome: novoNome }, { merge: true });
+    document.getElementById('btn-cancel-edit-category').click();
+    loadCategories();
+});
+
+// PRODUTOS (IGUAL ANTERIOR)
 async function loadProducts() {
     const list = document.getElementById('admin-product-list');
     list.innerHTML = '';
     const snap = await getDocs(collection(db, "produtos"));
     snap.forEach(d => {
         const p = d.data();
-        list.innerHTML += `
-            <div class="product-item">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <img src="${p.img}" style="width:40px;height:40px;border-radius:50%">
-                    <b>${p.nome}</b>
-                </div>
-                <button class="btn-delete" onclick="window.delProd('${d.id}')">Apagar</button>
-            </div>`;
+        list.innerHTML += `<div class="product-item"><div><b>${p.nome}</b></div><button class="admin-btn btn-small danger" onclick="window.delProd('${d.id}')">Apagar</button></div>`;
     });
 }
 window.delProd = async (id) => { if(confirm("Apagar produto?")) { await deleteDoc(doc(db, "produtos", id)); loadProducts(); } };
@@ -101,8 +115,6 @@ document.getElementById('btn-add-product').addEventListener('click', async () =>
         desc: document.getElementById('prod-desc').value,
         categoria: document.getElementById('prod-cat').value
     };
-    if(!p.nome || !p.categoria) return alert("Preencha o nome e a categoria!");
     await addDoc(collection(db, "produtos"), p);
-    alert("Produto cadastrado!"); 
-    loadProducts();
+    alert("Produto cadastrado!"); loadProducts();
 });
