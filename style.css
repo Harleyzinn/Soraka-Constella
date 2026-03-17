@@ -1,3 +1,6 @@
+/* =========================================
+   FONTES E CONFIGURAÇÃO BASE
+   ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
@@ -15,57 +18,116 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding-bottom: 100px;
+    line-height: 1.5;
+    padding-bottom: 140px;
+    overflow-x: hidden;
 }
 
+/* =========================================
+   ESTRUTURA DO SITE (MOBILE FIRST)
+   ========================================= */
+.container { 
+    width: 100%;
+    max-width: 480px; /* Base para mobile */
+    margin: 0 auto; 
+    padding: 20px;
+}
+
+header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 { font-family: 'Emilys Candy', cursive; font-size: 3rem; line-height: 1; font-weight: 900; }
+.subtitle { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 800; }
+
+/* FIX DO COELHO GIGANTE */
+.bunny-icon { 
+    width: 60px !important; 
+    height: 60px !important; 
+    margin-top: 15px; 
+    display: block;
+}
+
+/* Menu de Categorias */
+.category-menu { 
+    display: flex; 
+    gap: 10px; 
+    overflow-x: auto; 
+    padding: 10px 0; 
+    margin-bottom: 20px; 
+    justify-content: center; /* Centraliza no mobile se couber */
+}
+.cat-btn { 
+    background: transparent; border: 2px solid var(--text-color); color: var(--text-color); 
+    padding: 6px 15px; border-radius: 20px; font-weight: 800; cursor: pointer; white-space: nowrap; 
+}
+.cat-btn.active { background: var(--text-color); color: var(--card-color); }
+
+/* Cartão de Produto */
+.product-card { 
+    background-color: var(--card-color); border-radius: 25px; padding: 15px; 
+    margin-bottom: 20px; display: flex; align-items: center; gap: 15px; 
+}
+.product-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--text-color); }
+.product-info-wrapper { flex: 1; }
+.product-title { font-family: 'Emilys Candy', cursive; font-size: 1.3rem; font-weight: 900; }
+.product-price { font-size: 1.3rem; font-weight: 800; }
+.product-desc { font-size: 0.75rem; font-weight: 600; margin-bottom: 10px; opacity: 0.9; }
+
+.add-btn { background: var(--btn-color); color: white; border: none; padding: 8px; border-radius: 10px; width: 100%; font-weight: 800; cursor: pointer; }
+
+/* Seção de Informações */
+.info-section { margin-top: 40px; text-align: center; }
+.info-title { font-family: 'Emilys Candy', cursive; font-size: 2.5rem; margin-bottom: 20px; }
+.info-card { background: var(--card-color); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+
+/* =========================================
+   ESTILO DO PC (APROVEITANDO O ESPAÇO)
+   ========================================= */
+@media (min-width: 768px) {
+    .container { max-width: 1100px; } /* Abre o container no PC */
+
+    /* Grid de Produtos: 3 por linha no PC */
+    #product-list { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+        gap: 20px; 
+    }
+    .product-card { margin-bottom: 0; }
+
+    /* Grid de Informações: 4 colunas lado a lado */
+    .info-cards-wrapper { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 15px; 
+    }
+    .info-card { margin-bottom: 0; min-height: 200px; display: flex; flex-direction: column; justify-content: center; }
+}
+
+/* =========================================
+   PAINEL ADMIN E MODAIS (FIXOS)
+   ========================================= */
 .admin-container { max-width: 500px; margin: 0 auto; padding: 20px; text-align: center; }
-.admin-card { background: var(--card-color); border-radius: 25px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.admin-card { background: var(--card-color); border-radius: 25px; padding: 25px; margin-bottom: 25px; }
 
-/* FORMS */
 .form-group { margin-bottom: 15px; text-align: left; }
-.form-group label { display: block; font-weight: 800; margin-bottom: 5px; font-size: 0.9rem; }
-.form-group input, .form-group textarea, .form-group select { 
-    width: 100% !important; padding: 12px !important; border-radius: 12px !important; border: none !important; 
-    background: var(--white) !important; color: var(--text-color) !important; font-family: 'Nunito' !important;
+.form-group input, .form-group select, .form-group textarea { 
+    width: 100% !important; padding: 12px !important; border-radius: 10px !important; border: none !important; 
+    background: #fff !important; font-family: 'Nunito' !important;
 }
 
-.admin-btn { 
-    background: var(--text-color); color: #fff; border: none; padding: 12px; 
-    border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; 
-}
+.admin-btn { background: var(--text-color); color: #fff; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 800; }
 .admin-btn.danger { background: #d9534f; }
 
-/* LISTA */
-.product-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.3); padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; }
-.category-actions { display: flex; gap: 8px; }
-.btn-small { padding: 6px 12px !important; width: auto !important; font-size: 0.8rem !important; margin: 0 !important; }
-
-/* O MODAL DE VERDADE (FIXO E CENTRALIZADO) */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7); /* Escurece o fundo */
-    display: none; /* Escondido */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Fica por cima de TUDO */
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.8); display: none; justify-content: center; align-items: center; z-index: 9999;
 }
+.modal-overlay.open { display: flex; }
+.modal-content { width: 90%; max-width: 380px; animation: scaleUp 0.3s forwards; }
 
-.modal-overlay.open {
-    display: flex; /* Mostra quando a classe .open é adicionada */
-}
-
-.modal-content {
-    width: 90%;
-    max-width: 380px;
-    margin-bottom: 0 !important; /* Remove margem de card comum */
-    animation: scaleUp 0.2s ease-out;
-}
-
-@keyframes scaleUp {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
+@keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
