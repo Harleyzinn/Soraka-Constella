@@ -1,14 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// !!! COLOQUE SUAS CREDENCIAIS AQUI !!!
+// Suas credenciais oficiais do Firebase
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_ID",
-  appId: "SEU_APP_ID"
+    apiKey: "AIzaSyCl-7TW2qAIyCLAvvN54LyY7ubiXV9ajw0",
+    authDomain: "soraka-constella.firebaseapp.com",
+    projectId: "soraka-constella",
+    storageBucket: "soraka-constella.firebasestorage.app",
+    messagingSenderId: "593569822773",
+    appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
+    measurementId: "G-57JW68RKZL"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -25,11 +26,9 @@ let produtosNaMemoria = [];
 let categoriaAtual = 'Todos';
 
 async function initStore() {
-    // Carrega Desconto
     const docSnap = await getDoc(doc(db, "configuracoes", "loja"));
     if (docSnap.exists()) descontoGlobal = docSnap.data().descontoGlobal || 0;
 
-    // Carrega Categorias
     const catMenu = document.getElementById('category-filter');
     catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
     
@@ -39,7 +38,6 @@ async function initStore() {
         catMenu.innerHTML += `<button class="cat-btn" onclick="window.filterCategory('${nome}')">${nome}</button>`;
     });
 
-    // Carrega Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     prodSnap.forEach((doc) => {
         produtosNaMemoria.push({ id: doc.id, ...doc.data() });
@@ -66,7 +64,7 @@ function renderProducts() {
         : produtosNaMemoria.filter(p => p.categoria === categoriaAtual);
 
     if(produtosFiltrados.length === 0) {
-        list.innerHTML = '<p style="text-align:center; padding: 20px;">Nenhum produto cadastrado.</p>';
+        list.innerHTML = '<p style="text-align:center; padding: 20px; font-weight:bold;">Nenhum produto nesta categoria.</p>';
         return;
     }
 
@@ -102,7 +100,6 @@ function renderProducts() {
 window.addToCart = (id) => {
     const card = document.querySelector(`.product-card[data-id="${id}"]`);
     cart[id] = { name: card.dataset.name, price: parseFloat(card.dataset.price), qty: 1 };
-    
     card.querySelector('.add-btn').style.display = 'none';
     card.querySelector('.qty-controls').style.display = 'flex';
     window.updateCartUI();
