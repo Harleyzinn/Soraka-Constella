@@ -2,15 +2,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// Suas credenciais oficiais do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
-  authDomain: "soraka-constella.firebaseapp.com",
-  projectId: "soraka-constella",
-  storageBucket: "soraka-constella.firebasestorage.app",
-  messagingSenderId: "593569822773",
-  appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
-  measurementId: "G-57JW68RKZL"
+    apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
+    authDomain: "soraka-constella.firebaseapp.com",
+    projectId: "soraka-constella",
+    storageBucket: "soraka-constella.firebasestorage.app",
+    messagingSenderId: "593569822773",
+    appId: "1:593569822773:web:5d44d9cd41518b7f59597c"
 };
 
 const app = initializeApp(firebaseConfig);
