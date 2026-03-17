@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
@@ -15,11 +15,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// VARIAVEIS DE CONTROLE
 let idParaApagar = null;
 const modal = document.getElementById('confirm-modal');
 
-// MONITOR DE LOGIN
 onAuthStateChanged(auth, (user) => {
     document.getElementById('login-screen').style.display = user ? 'none' : 'block';
     document.getElementById('dashboard-screen').style.display = user ? 'block' : 'none';
@@ -32,14 +30,20 @@ function loadAll() { loadCategories(); loadProducts(); }
 document.getElementById('btn-login').addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-password').value;
-    try { await signInWithEmailAndPassword(auth, email, pass); } 
-    catch (e) { document.getElementById('login-error').style.display = 'block'; }
+    try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("Erro no login"); }
 });
 document.getElementById('btn-logout').addEventListener('click', () => signOut(auth));
 
-// MODAL LÓGICA
-window.abrirModal = (id) => { idParaApagar = id; modal.classList.add('open'); };
-document.getElementById('modal-cancel').addEventListener('click', () => modal.classList.remove('open'));
+// LÓGICA DO MODAL
+window.abrirModal = (id) => { 
+    idParaApagar = id; 
+    modal.classList.add('open'); 
+};
+
+document.getElementById('modal-cancel').addEventListener('click', () => {
+    modal.classList.remove('open');
+});
+
 document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
     if(idParaApagar) {
         await deleteDoc(doc(db, "categorias", idParaApagar));
@@ -60,7 +64,7 @@ async function loadCategories() {
             <div class="product-item">
                 <span style="font-weight:800">${cat.nome}</span>
                 <div class="category-actions">
-                    <button class="admin-btn btn-small btn-edit" onclick="window.startEdit('${d.id}', '${cat.nome}')">Editar</button>
+                    <button class="admin-btn btn-small" style="background:#5bc0de" onclick="window.startEdit('${d.id}', '${cat.nome}')">Editar</button>
                     <button class="admin-btn btn-small danger" onclick="window.abrirModal('${d.id}')">Excluir</button>
                 </div>
             </div>`;
@@ -75,7 +79,7 @@ document.getElementById('btn-add-category').addEventListener('click', async () =
     document.getElementById('cat-nome').value = ''; loadCategories();
 });
 
-// EDITAR CATEGORIA
+// EDIÇÃO
 window.startEdit = (id, nome) => {
     document.getElementById('form-add-category').style.display = 'none';
     document.getElementById('form-edit-category').style.display = 'block';
@@ -96,7 +100,7 @@ document.getElementById('btn-save-edit-category').addEventListener('click', asyn
     loadCategories();
 });
 
-// PRODUTOS (IGUAL ANTERIOR)
+// PRODUTOS
 async function loadProducts() {
     const list = document.getElementById('admin-product-list');
     list.innerHTML = '';
