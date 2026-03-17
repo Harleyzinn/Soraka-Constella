@@ -1,3 +1,6 @@
+/* =========================================
+   FONTES E CORES
+   ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
@@ -15,45 +18,60 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding-bottom: 200px;
+    padding-bottom: 200px; /* Espaço pro carrinho não cobrir o texto */
+    overflow-x: hidden;
 }
 
 .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
 
 /* HEADER */
 header { text-align: center; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; }
-h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; color: var(--text-color); }
+h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; }
 .subtitle { font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 800; }
-.bunny-icon { width: 60px !important; height: 60px !important; margin-top: 15px; display: block; color: var(--text-color); }
-
-/* CARDS DE INFORMAÇÕES (RECUPERADOS) */
-.info-section { margin-top: 60px; text-align: center; }
-.info-title { font-family: 'Emilys Candy', cursive; font-size: 2.8rem; margin-bottom: 30px; }
-.info-card { 
-    background-color: var(--card-color) !important; 
-    border-radius: 30px !important; 
-    padding: 30px !important; 
-    margin-bottom: 20px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-.info-card h3 { font-family: 'Emilys Candy', cursive; font-size: 1.8rem; margin-bottom: 12px; }
-.info-card p { font-weight: 700; line-height: 1.6; }
+.bunny-icon { width: 60px !important; height: 60px !important; margin-top: 15px; display: block; }
 
 /* PRODUTOS */
 .product-card { background-color: var(--card-color); border-radius: 25px; padding: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
 .product-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--text-color); flex-shrink: 0; }
 .product-title { font-family: 'Emilys Candy', cursive; font-size: 1.5rem; font-weight: 900; }
-.product-price { font-size: 1.3rem; font-weight: 800; white-space: nowrap; }
+.product-price { font-size: 1.3rem; font-weight: 800; }
+.add-btn { background: var(--btn-color); color: white; border: none; padding: 10px; border-radius: 12px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 8px; }
 
-/* CARRINHO (ESTILO MOBILE APP) */
+/* INFORMAÇÕES (FORÇANDO O FUNDO) */
+.info-section { margin-top: 60px; text-align: center; }
+.info-title { font-family: 'Emilys Candy', cursive; font-size: 2.8rem; margin-bottom: 30px; }
+
+/* Aqui é onde o fundo rosa volta com força */
+.info-card { 
+    background-color: var(--card-color) !important; 
+    display: block !important;
+    border-radius: 30px !important; 
+    padding: 30px !important; 
+    margin-bottom: 20px !important; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+    text-align: center !important;
+}
+.info-card h3 { font-family: 'Emilys Candy', cursive; font-size: 1.8rem; margin-bottom: 12px; display: block; }
+.info-card p { font-weight: 700; line-height: 1.6; display: block; }
+
+/* CARRINHO (ESTILO MOBILE APP - BLINDADO) */
 .cart-bar { 
-    position: fixed !important; bottom: 0 !important; left: 0 !important; width: 100% !important; 
-    background: var(--white) !important; padding: 20px !important; 
-    display: none; flex-direction: column; gap: 15px; 
-    z-index: 9999 !important; border-radius: 30px 30px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.12); 
+    position: fixed !important; 
+    bottom: 0 !important; 
+    left: 0 !important; 
+    width: 100% !important; 
+    background-color: var(--white) !important; 
+    padding: 20px !important; 
+    display: none; /* Ativado via JS */
+    flex-direction: column; 
+    gap: 15px; 
+    z-index: 10000 !important; 
+    border-radius: 30px 30px 0 0 !important; 
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15) !important; 
 }
 .cart-bar.visible { display: flex !important; }
-.cart-notes-input { width: 100%; padding: 15px; border: 1px solid #f0f0f0; border-radius: 15px; background: #fafafa; font-family: inherit; font-weight: 600; }
+.cart-notes-input { width: 100%; padding: 15px; border: 1px solid #eee; border-radius: 15px; background: #fafafa; font-family: inherit; font-weight: 600; outline: none; }
+.cart-actions { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .checkout-btn { background: var(--success); color: white !important; text-decoration: none !important; padding: 16px 25px; border-radius: 20px; font-weight: 800; display: flex; gap: 10px; align-items: center; justify-content: center; }
 
 /* RESPONSIVIDADE PC */
@@ -61,10 +79,12 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
     .container { max-width: 1200px; }
     #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
     .info-cards-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .cart-bar { width: 600px; left: 50%; transform: translateX(-50%); bottom: 25px; border-radius: 25px; }
+    .info-card { margin-bottom: 0 !important; }
+    .cart-bar { width: 600px !important; left: 50% !important; transform: translateX(-50%) !important; bottom: 25px !important; border-radius: 25px !important; }
 }
 
-/* ESTILO POLÍTICA DE PRIVACIDADE (ESPECÍFICO) */
-.privacy-content { text-align: left; line-height: 1.8; margin-top: 30px; }
-.privacy-content h2 { font-family: 'Emilys Candy'; margin: 25px 0 10px; color: var(--text-color); }
-.back-link { display: inline-block; margin-top: 30px; font-weight: 800; color: var(--text-color); text-decoration: none; }
+/* ADMIN */
+.admin-container { max-width: 500px; margin: 0 auto; padding: 20px; text-align: center; }
+.admin-card { background: var(--card-color); border-radius: 25px; padding: 25px; margin-bottom: 25px; }
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group input, .form-group select, .form-group textarea { width: 100% !important; padding: 12px !important; border-radius: 12px !important; border: none !important; background: #fff !important; font-family: 'Nunito' !important; font-weight: 700; }
