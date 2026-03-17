@@ -2,14 +2,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// !!! COLOQUE SUAS CREDENCIAIS AQUI !!!
+// Suas credenciais oficiais do Firebase
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_ID",
-  appId: "SEU_APP_ID"
+    apiKey: "AIzaSyCl-7TW2qAIyCLAvvN54LyY7ubiXV9ajw0",
+    authDomain: "soraka-constella.firebaseapp.com",
+    projectId: "soraka-constella",
+    storageBucket: "soraka-constella.firebasestorage.app",
+    messagingSenderId: "593569822773",
+    appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
+    measurementId: "G-57JW68RKZL"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -46,7 +47,6 @@ document.getElementById('btn-login').addEventListener('click', async () => {
 
 document.getElementById('btn-logout').addEventListener('click', () => { signOut(auth); });
 
-// ======================= DESCONTO GLOBAL =======================
 const configDocRef = doc(db, "configuracoes", "loja");
 async function loadGlobalConfig() {
     const docSnap = await getDoc(configDocRef);
@@ -61,7 +61,6 @@ document.getElementById('btn-save-config').addEventListener('click', async () =>
     } catch (error) { alert("Erro ao salvar."); }
 });
 
-// ======================= CATEGORIAS =======================
 document.getElementById('btn-add-category').addEventListener('click', async () => {
     const nome = document.getElementById('cat-nome').value.trim();
     if(!nome) return alert("Digite um nome!");
@@ -83,7 +82,7 @@ async function loadCategories() {
         const cat = doc.data();
         listDiv.innerHTML += `
             <div class="product-item">
-                <span>${cat.nome}</span>
+                <span style="font-weight:bold;">${cat.nome}</span>
                 <button class="btn-delete" onclick="window.deleteCategory('${doc.id}')">Apagar</button>
             </div>
         `;
@@ -98,7 +97,6 @@ window.deleteCategory = async (id) => {
     }
 };
 
-// ======================= PRODUTOS =======================
 document.getElementById('btn-add-product').addEventListener('click', async () => {
     const nome = document.getElementById('prod-nome').value;
     const preco = parseFloat(document.getElementById('prod-preco').value);
@@ -106,23 +104,29 @@ document.getElementById('btn-add-product').addEventListener('click', async () =>
     const desc = document.getElementById('prod-desc').value;
     const cat = document.getElementById('prod-cat').value;
 
-    if(!nome || !preco || !img || !desc || !cat) return alert("Preencha tudo!");
+    if(!nome || !preco || !img || !desc || !cat) return alert("Preencha todos os campos!");
 
     try {
         await addDoc(produtosColRef, { nome, preco, img, desc, categoria: cat, ativo: true });
         alert("Produto adicionado!");
+        
+        document.getElementById('prod-nome').value = '';
+        document.getElementById('prod-preco').value = '';
+        document.getElementById('prod-img').value = '';
+        document.getElementById('prod-desc').value = '';
+        
         loadProducts(); 
     } catch (e) { alert("Erro ao adicionar produto."); }
 });
 
 async function loadProducts() {
     const listDiv = document.getElementById('admin-product-list');
-    listDiv.innerHTML = '<p style="text-align:center;">Carregando...</p>';
+    listDiv.innerHTML = '<p style="text-align:center; font-weight:bold;">Carregando...</p>';
     
     try {
         const querySnapshot = await getDocs(produtosColRef);
         listDiv.innerHTML = '';
-        if(querySnapshot.empty) return listDiv.innerHTML = '<p>Nenhum produto cadastrado.</p>';
+        if(querySnapshot.empty) return listDiv.innerHTML = '<p style="font-weight:bold;">Nenhum produto cadastrado.</p>';
 
         querySnapshot.forEach((doc) => {
             const prod = doc.data();
