@@ -1,80 +1,147 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+// !!! COLOQUE SUAS CREDENCIAIS AQUI !!!
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com",
+  messagingSenderId: "SEU_ID",
+  appId: "SEU_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const cart = {};
-const phone = "5511953425657"; 
+const phone = "5511953425657";
+let isMagicActive = false;
 let bunnyClicks = 0;
 let clickTimer;
-let isMagicActive = false;
+let descontoGlobal = 0;
 
-// 1. Função para renderizar os produtos na tela automaticamente
+let produtosNaMemoria = []; 
+let categoriaAtual = 'Todos';
+
+async function initStore() {
+    // Carrega Desconto
+    const docSnap = await getDoc(doc(db, "configuracoes", "loja"));
+    if (docSnap.exists()) descontoGlobal = docSnap.data().descontoGlobal || 0;
+
+    // Carrega Categorias
+    const catMenu = document.getElementById('category-filter');
+    catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
+    
+    const catSnap = await getDocs(collection(db, "categorias"));
+    catSnap.forEach((doc) => {
+        const nome = doc.data().nome;
+        catMenu.innerHTML += `<button class="cat-btn" onclick="window.filterCategory('${nome}')">${nome}</button>`;
+    });
+
+    // Carrega Produtos
+    const prodSnap = await getDocs(collection(db, "produtos"));
+    prodSnap.forEach((doc) => {
+        produtosNaMemoria.push({ id: doc.id, ...doc.data() });
+    });
+
+    renderProducts();
+}
+
+window.filterCategory = (nomeCat) => {
+    categoriaAtual = nomeCat;
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.innerText === nomeCat) btn.classList.add('active');
+    });
+    renderProducts();
+};
+
 function renderProducts() {
-    const productList = document.getElementById('product-list');
-    if(!productList) return; // Evita erro se o script rodar na página de privacidade
+    const list = document.getElementById('product-list');
+    list.innerHTML = '';
 
-    productList.innerHTML = ''; // Limpa o container
+    const produtosFiltrados = categoriaAtual === 'Todos' 
+        ? produtosNaMemoria 
+        : produtosNaMemoria.filter(p => p.categoria === categoriaAtual);
 
-    produtosData.forEach((produto, index) => {
-        // Calcula o delay da animação para criar o efeito de cascata
-        const delayClass = `delay-${(index % 5) + 2}`; 
+    if(produtosFiltrados.length === 0) {
+        list.innerHTML = '<p style="text-align:center; padding: 20px;">Nenhum produto cadastrado.</p>';
+        return;
+    }
 
-        const cardHTML = `
-            <div class="product-card stagger-item ${delayClass}" data-id="${produto.id}" data-name="${produto.nome}" data-price="${produto.preco}">
-                <img src="${produto.img}" alt="${produto.nome}" class="product-img">
+    produtosFiltrados.forEach((prod, index) => {
+        const delay = `delay-${(index % 5) + 2}`; 
+        
+        const inCart = cart[prod.id];
+        const btnDisplay = inCart ? 'none' : 'block';
+        const ctrlDisplay = inCart ? 'flex' : 'none';
+        const qty = inCart ? inCart.qty : 1;
+
+        list.innerHTML += `
+            <div class="product-card stagger-item ${delay}" data-id="${prod.id}" data-name="${prod.nome}" data-price="${prod.preco}">
+                <img src="${prod.img}" alt="${prod.nome}" class="product-img">
                 <div class="product-info">
                     <div class="product-header">
-                        <div class="product-title">${produto.nome}</div>
-                        <div class="product-price">R$${produto.preco}</div>
+                        <div class="product-title">${prod.nome}</div>
+                        <div class="product-price">R$${prod.preco.toFixed(2)}</div>
                     </div>
-                    <div class="product-desc">${produto.desc}</div>
-                    <button class="add-btn" onclick="addToCart('${produto.id}')">Adicionar</button>
-                    <div class="qty-controls" id="controls-${produto.id}">
-                        <button class="qty-btn" onclick="updateQty('${produto.id}', -1)">-</button>
-                        <span class="qty-display" id="qty-${produto.id}">1</span>
-                        <button class="qty-btn" onclick="updateQty('${produto.id}', 1)">+</button>
+                    <div class="product-desc">${prod.desc}</div>
+                    <button class="add-btn" style="display:${btnDisplay}" onclick="window.addToCart('${prod.id}')">Adicionar</button>
+                    <div class="qty-controls" style="display:${ctrlDisplay}" id="controls-${prod.id}">
+                        <button class="qty-btn" onclick="window.updateQty('${prod.id}', -1)">-</button>
+                        <span class="qty-display" id="qty-${prod.id}">${qty}</span>
+                        <button class="qty-btn" onclick="window.updateQty('${prod.id}', 1)">+</button>
                     </div>
                 </div>
             </div>
         `;
-        productList.innerHTML += cardHTML;
     });
 }
 
-// 2. Funções do Carrinho
-function addToCart(id) {
+window.addToCart = (id) => {
     const card = document.querySelector(`.product-card[data-id="${id}"]`);
-    const name = card.dataset.name;
-    const price = parseFloat(card.dataset.price);
-
-    cart[id] = { name, price, qty: 1 };
+    cart[id] = { name: card.dataset.name, price: parseFloat(card.dataset.price), qty: 1 };
+    
     card.querySelector('.add-btn').style.display = 'none';
-    card.querySelector('.qty-controls').classList.add('active');
-    updateCartUI();
-}
+    card.querySelector('.qty-controls').style.display = 'flex';
+    window.updateCartUI();
+};
 
-function updateQty(id, change) {
+window.updateQty = (id, change) => {
     if (!cart[id]) return;
     cart[id].qty += change;
 
     if (cart[id].qty <= 0) {
         delete cart[id];
         const card = document.querySelector(`.product-card[data-id="${id}"]`);
-        card.querySelector('.qty-controls').classList.remove('active');
-        card.querySelector('.add-btn').style.display = 'block';
+        if(card) {
+            card.querySelector('.qty-controls').style.display = 'none';
+            card.querySelector('.add-btn').style.display = 'block';
+        }
     } else {
-        document.getElementById(`qty-${id}`).innerText = cart[id].qty;
+        const display = document.getElementById(`qty-${id}`);
+        if(display) display.innerText = cart[id].qty;
     }
-    updateCartUI();
-}
+    window.updateCartUI();
+};
 
-function updateCartUI() {
-    let total = 0;
-    let totalItems = 0;
-    let orderText = "Olá! Gostaria de fazer o seguinte pedido na Soraka Constella:\n\n";
+window.updateCartUI = () => {
+    let subtotal = 0; let totalItems = 0;
+    let orderText = "Olá Beatriz! Gostaria de fazer o seguinte pedido na Soraka Constella:\n\n";
 
     for (const id in cart) {
         const item = cart[id];
-        const subtotal = item.price * item.qty;
-        total += subtotal;
+        subtotal += item.price * item.qty;
         totalItems += item.qty;
-        orderText += `▪️ ${item.qty}x ${item.name} - R$ ${subtotal.toFixed(2)}\n`;
+        orderText += `▪️ ${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}\n`;
+    }
+
+    let total = subtotal;
+    if(descontoGlobal > 0 && totalItems > 0) {
+        const valorDesconto = subtotal * (descontoGlobal / 100);
+        total = subtotal - valorDesconto;
+        orderText += `\n🎁 *Desconto da Loja (${descontoGlobal}%):* - R$ ${valorDesconto.toFixed(2)}`;
     }
 
     const notes = document.getElementById('order-notes') ? document.getElementById('order-notes').value.trim() : "";
@@ -91,31 +158,22 @@ function updateCartUI() {
         document.getElementById('checkout-btn').href = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
     } else {
         cartBar.classList.remove('visible');
-        if(document.getElementById('order-notes')) document.getElementById('order-notes').value = "";
     }
-}
+};
 
-// 3. Funções do Easter Egg e UI
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    if(!toast) return;
-    toast.innerText = message;
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 3500);
-}
-
-function triggerEasterEgg() {
+window.triggerEasterEgg = () => {
     if (isMagicActive) return; 
     bunnyClicks++;
     clearTimeout(clickTimer);
     if (bunnyClicks === 5) {
-        isMagicActive = true;
-        document.body.classList.add('theme-magic');
-        showToast("✨ Você descobriu o tema da Constelação!");
+        isMagicActive = true; document.body.classList.add('theme-magic');
+        const toast = document.getElementById('toast');
+        toast.innerText = "✨ Você descobriu o tema da Constelação!";
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 3500);
     } else {
         clickTimer = setTimeout(() => { bunnyClicks = 0; }, 1000);
     }
-}
+};
 
-// Inicializa a renderização quando a página carrega
-window.onload = renderProducts;
+window.addEventListener('DOMContentLoaded', initStore);
