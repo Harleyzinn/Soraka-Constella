@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Variáveis de Cores - Tema Padrão */
+        /* =========================================
+           VARIÁVEIS DE CORES
+           ========================================= */
         :root {
             --bg-color: #ebece0;
             --card-color: #f4cdcd;
@@ -21,7 +23,6 @@
             --transition-speed: 0.4s;
         }
 
-        /* Variáveis de Cores - Tema Galáctico (Easter Egg) */
         body.theme-magic {
             --bg-color: #0b0c10;
             --card-color: #1f2833;
@@ -39,7 +40,7 @@
         }
 
         body.theme-magic .product-img { border-color: var(--text-color); }
-        body.theme-magic .cart-bar { border-top: 1px solid var(--btn-color); }
+        body.theme-magic .cart-bar { border-top: 1px solid var(--btn-color); background-color: var(--white); }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -53,7 +54,9 @@
             overflow-x: hidden;
         }
 
-        /* 1. Splash Screen Melhorada */
+        /* =========================================
+           SPLASH SCREEN E ANIMAÇÕES
+           ========================================= */
         #splash {
             position: fixed;
             inset: 0;
@@ -79,6 +82,7 @@
             color: var(--text-color);
             letter-spacing: 1px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .spinner {
@@ -94,23 +98,22 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes fadeOutSplash { to { opacity: 0; visibility: hidden; } }
 
-        /* 2. Animação Staggered (Entrada em Cascata) */
         .stagger-item {
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-
         .delay-1 { animation-delay: 2.1s; }
         .delay-2 { animation-delay: 2.2s; }
         .delay-3 { animation-delay: 2.3s; }
         .delay-4 { animation-delay: 2.4s; }
         .delay-5 { animation-delay: 2.5s; }
 
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
+        /* =========================================
+           ESTRUTURA MOBILE (PADRÃO)
+           ========================================= */
         .container { max-width: 480px; margin: 0 auto; padding: 20px; }
 
         header { text-align: center; margin-bottom: 30px; margin-top: 10px; }
@@ -118,121 +121,77 @@
         .subtitle { font-family: 'Fredoka', sans-serif; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
         
         .bunny-icon { 
-            width: 50px; 
-            margin-top: 15px; 
-            cursor: pointer; 
-            transition: transform 0.2s;
-            -webkit-tap-highlight-color: transparent;
+            width: 50px; margin-top: 15px; cursor: pointer; 
+            transition: transform 0.2s; -webkit-tap-highlight-color: transparent;
         }
         .bunny-icon:active { transform: scale(0.8); }
 
         .product-card {
-            background-color: var(--card-color);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            position: relative;
+            background-color: var(--card-color); border-radius: 20px; padding: 15px;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); position: relative;
             transition: all var(--transition-speed);
         }
 
         .product-img {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--text-color);
-            transition: border-color var(--transition-speed);
+            width: 85px; height: 85px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--text-color); transition: border-color var(--transition-speed);
         }
 
-        .product-info { flex: 1; }
+        .product-info { flex: 1; display: flex; flex-direction: column; }
         .product-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .product-title { font-family: 'Fredoka', sans-serif; font-size: 1.2rem; line-height: 1.2; }
         .product-price { font-family: 'Fredoka', sans-serif; font-size: 1.3rem; font-weight: 600; }
-        .product-desc { font-size: 0.8rem; opacity: 0.9; margin-bottom: 8px; }
+        .product-desc { font-size: 0.8rem; opacity: 0.9; margin-bottom: 12px; flex-grow: 1; }
         
         .add-btn {
-            background-color: var(--btn-color);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background var(--transition-speed), transform 0.2s;
-            width: 100%;
+            background-color: var(--btn-color); color: #fff; border: none; border-radius: 10px;
+            padding: 8px 12px; font-family: 'Nunito', sans-serif; font-weight: bold; cursor: pointer;
+            transition: background var(--transition-speed), transform 0.2s; width: 100%;
         }
-
         .add-btn:active { transform: scale(0.98); }
         body.theme-magic .add-btn { color: #111; }
         body.theme-magic .add-btn:hover { background-color: var(--text-color); }
 
         .qty-controls {
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 2px;
+            display: none; justify-content: space-between; align-items: center;
+            background-color: rgba(255,255,255,0.2); border-radius: 10px; padding: 2px;
         }
         .qty-controls.active { display: flex; }
         
         .qty-btn {
-            background: var(--text-color);
-            color: #fff;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background var(--transition-speed);
+            background: var(--text-color); color: #fff; border: none; width: 32px; height: 32px;
+            border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; transition: background var(--transition-speed);
         }
-        
         body.theme-magic .qty-btn { color: #111; }
         .qty-display { font-weight: bold; width: 30px; text-align: center; }
 
         .info-section { margin-top: 40px; }
         .info-title { font-family: 'Fredoka', sans-serif; font-size: 2rem; text-align: center; margin-bottom: 20px; }
         .info-card { 
-            background-color: var(--card-color); 
-            border-radius: 20px; 
-            padding: 20px; 
-            text-align: center; 
-            margin-bottom: 15px; 
-            transition: all var(--transition-speed);
+            background-color: var(--card-color); border-radius: 20px; padding: 20px; 
+            text-align: center; margin-bottom: 15px; transition: all var(--transition-speed);
         }
         .info-card h3 { font-family: 'Fredoka', sans-serif; font-size: 1.3rem; margin-bottom: 10px; }
         .info-card p, .info-card ul { font-size: 0.9rem; list-style: none; }
 
         .cart-bar {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background-color: var(--white);
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
-            padding: 15px 20px;
-            display: flex; flex-direction: column; gap: 12px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color var(--transition-speed);
-            z-index: 1000;
-            border-top-left-radius: 20px; border-top-right-radius: 20px;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: var(--white); box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            padding: 15px 20px; display: flex; flex-direction: column; gap: 12px;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color var(--transition-speed);
+            z-index: 1000; border-top-left-radius: 20px; border-top-right-radius: 20px;
         }
         .cart-bar.visible { transform: translateY(0); }
 
         .cart-notes-input {
             width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 12px;
             font-family: 'Nunito', sans-serif; font-size: 0.9rem;
-            color: var(--text-color); background-color: transparent;
-            outline: none; transition: border-color 0.3s;
+            color: var(--text-color); background-color: transparent; outline: none; transition: border-color 0.3s;
         }
         .cart-notes-input:focus { border-color: var(--text-color); }
+        body.theme-magic .cart-notes-input { border-color: var(--btn-color); color: var(--text-color); }
 
         .cart-actions { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .cart-total { font-family: 'Fredoka', sans-serif; }
@@ -242,8 +201,7 @@
         .checkout-btn {
             background-color: var(--success); color: white; text-decoration: none;
             padding: 12px 20px; border-radius: 15px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
             transition: transform 0.2s;
         }
         .checkout-btn:active { transform: scale(0.95); }
@@ -259,6 +217,75 @@
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
         body.theme-magic #toast { background-color: var(--text-color); color: #111; box-shadow: 0 0 20px var(--text-color); }
+
+        /* =========================================
+           ADAPTAÇÃO PARA PC E TABLET (Media Queries)
+           ========================================= */
+        @media (min-width: 768px) {
+            .container { max-width: 1000px; padding: 40px 20px; }
+            
+            header { margin-bottom: 50px; }
+            h1 { font-size: 3.5rem; }
+            .bunny-icon { width: 60px; }
+
+            /* Grid para os produtos ficarem lado a lado */
+            #product-list {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+
+            /* Cartão de produto muda para o formato vertical na web */
+            .product-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+                height: 100%;
+            }
+
+            .product-img {
+                width: 140px; height: 140px; margin-bottom: 10px;
+            }
+
+            .product-header {
+                flex-direction: column; gap: 5px; justify-content: center; width: 100%;
+            }
+            
+            .product-title { font-size: 1.4rem; }
+            .product-price { font-size: 1.5rem; }
+
+            .qty-controls { width: 100%; max-width: 160px; margin: 0 auto; }
+
+            /* Informações lado a lado */
+            .info-section { margin-top: 60px; }
+            .info-cards-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            .info-card { margin-bottom: 0; padding: 30px; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+
+            /* Carrinho vira uma Ilha Flutuante centralizada */
+            .cart-bar {
+                width: 90%;
+                max-width: 800px;
+                left: 50%;
+                bottom: 30px;
+                border-radius: 20px;
+                flex-direction: row; /* Coloca o input e botões lado a lado */
+                align-items: center;
+                gap: 20px;
+                /* Muda a animação para subir do centro */
+                transform: translate(-50%, 150%);
+            }
+            
+            .cart-bar.visible {
+                transform: translate(-50%, 0);
+            }
+
+            .cart-notes-input { width: 40%; margin-bottom: 0; }
+            .cart-actions { width: 60%; }
+        }
     </style>
 </head>
 <body>
@@ -338,13 +365,15 @@
 
         <section class="info-section stagger-item delay-5">
             <h2 class="info-title">Informações</h2>
-            <div class="info-card">
-                <h3>Pagamentos</h3>
-                <p>Crédito | PIX | Dinheiro</p>
-            </div>
-            <div class="info-card">
-                <h3>Contato</h3>
-                <p>Soraka Constella<br>Whatsapp: (11) 95342-5657</p>
+            <div class="info-cards-wrapper">
+                <div class="info-card">
+                    <h3>Pagamentos</h3>
+                    <p>Crédito | PIX | Dinheiro</p>
+                </div>
+                <div class="info-card">
+                    <h3>Contato</h3>
+                    <p>Soraka Constella<br>Whatsapp: (11) 95342-5657</p>
+                </div>
             </div>
         </section>
     </div>
