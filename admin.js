@@ -15,52 +15,63 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Monitor de Login
 onAuthStateChanged(auth, (user) => {
+    const loginScr = document.getElementById('login-screen');
+    const dashScr = document.getElementById('dashboard-screen');
+    
     if (user) {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('dashboard-screen').style.display = 'block';
+        if(loginScr) loginScr.style.display = 'none';
+        if(dashScr) dashScr.style.display = 'block';
         loadAll();
     } else {
-        document.getElementById('login-screen').style.display = 'block';
-        document.getElementById('dashboard-screen').style.display = 'none';
+        if(loginScr) loginScr.style.display = 'block';
+        if(dashScr) dashScr.style.display = 'none';
     }
 });
 
 function loadAll() { loadGlobalConfig(); loadCategories(); loadProducts(); }
 
-// LOGIN / LOGOUT
+// Botoes de Login/Sair
 document.getElementById('btn-login').addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-password').value;
-    try { await signInWithEmailAndPassword(auth, email, pass); } 
-    catch (e) { document.getElementById('login-error').style.display = 'block'; }
+    try { 
+        await signInWithEmailAndPassword(auth, email, pass); 
+    } catch (e) { 
+        alert("Erro no login: " + e.message);
+    }
 });
 document.getElementById('btn-logout').addEventListener('click', () => signOut(auth));
 
-// CONFIG
+// CONFIGURAÇÃO DE DESCONTO
 async function loadGlobalConfig() {
     const snap = await getDoc(doc(db, "configuracoes", "loja"));
     if (snap.exists()) document.getElementById('global-discount').value = snap.data().descontoGlobal || 0;
 }
 document.getElementById('btn-save-config').addEventListener('click', async () => {
-    await setDoc(doc(db, "configuracoes", "loja"), { descontoGlobal: parseInt(document.getElementById('global-discount').value) || 0 });
-    alert("Salvo!");
+    await setDoc(doc(db, "configuracoes", "loja"), { 
+        descontoGlobal: parseInt(document.getElementById('global-discount').value) || 0 
+    });
+    alert("Desconto salvo!");
 });
 
 // CATEGORIAS
 async function loadCategories() {
     const list = document.getElementById('admin-category-list');
     const select = document.getElementById('prod-cat');
-    list.innerHTML = ''; select.innerHTML = '';
+    list.innerHTML = ''; select.innerHTML = '<option value="">Escolha...</option>';
     const snap = await getDocs(collection(db, "categorias"));
     snap.forEach(d => {
-        list.innerHTML += `<div class="product-item"><span>${d.data().nome}</span><button class="btn-delete" onclick="window.delCat('${d.id}')">X</button></div>`;
+        list.innerHTML += `<div class="product-item"><span>${d.data().nome}</span><button class="btn-delete" onclick="window.delCat('${d.id}')">Excluir</button></div>`;
         select.innerHTML += `<option value="${d.data().nome}">${d.data().nome}</option>`;
     });
 }
-window.delCat = async (id) => { if(confirm("Apagar?")) { await deleteDoc(doc(db, "categorias", id)); loadCategories(); } };
+window.delCat = async (id) => { if(confirm("Apagar categoria?")) { await deleteDoc(doc(db, "categorias", id)); loadCategories(); } };
 document.getElementById('btn-add-category').addEventListener('click', async () => {
-    await addDoc(collection(db, "categorias"), { nome: document.getElementById('cat-nome').value });
+    const nome = document.getElementById('cat-nome').value;
+    if(!nome) return;
+    await addDoc(collection(db, "categorias"), { nome });
     document.getElementById('cat-nome').value = ''; loadCategories();
 });
 
@@ -71,10 +82,17 @@ async function loadProducts() {
     const snap = await getDocs(collection(db, "produtos"));
     snap.forEach(d => {
         const p = d.data();
-        list.innerHTML += `<div class="product-item"><div><img src="${p.img}"> <b>${p.nome}</b></div><button class="btn-delete" onclick="window.delProd('${d.id}')">Apagar</button></div>`;
+        list.innerHTML += `
+            <div class="product-item">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="${p.img}" style="width:40px;height:40px;border-radius:50%">
+                    <b>${p.nome}</b>
+                </div>
+                <button class="btn-delete" onclick="window.delProd('${d.id}')">Apagar</button>
+            </div>`;
     });
 }
-window.delProd = async (id) => { if(confirm("Apagar?")) { await deleteDoc(doc(db, "produtos", id)); loadProducts(); } };
+window.delProd = async (id) => { if(confirm("Apagar produto?")) { await deleteDoc(doc(db, "produtos", id)); loadProducts(); } };
 document.getElementById('btn-add-product').addEventListener('click', async () => {
     const p = {
         nome: document.getElementById('prod-nome').value,
@@ -83,6 +101,8 @@ document.getElementById('btn-add-product').addEventListener('click', async () =>
         desc: document.getElementById('prod-desc').value,
         categoria: document.getElementById('prod-cat').value
     };
+    if(!p.nome || !p.categoria) return alert("Preencha o nome e a categoria!");
     await addDoc(collection(db, "produtos"), p);
-    alert("Adicionado!"); loadProducts();
+    alert("Produto cadastrado!"); 
+    loadProducts();
 });
