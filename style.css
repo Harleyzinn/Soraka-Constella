@@ -15,49 +15,57 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.5;
-    padding-bottom: 140px;
+    padding-bottom: 100px;
 }
 
-.container { max-width: 480px; margin: 0 auto; padding: 20px; }
-header { text-align: center; margin-bottom: 40px; }
-h1 { font-family: 'Emilys Candy', cursive; font-size: 3.5rem; font-weight: 900; }
-.subtitle { font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; font-weight: 800; text-align: center;}
-
-/* PRODUTOS */
-.product-card { background-color: var(--card-color); border-radius: 25px; padding: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
-.product-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--text-color);}
-.product-title { font-family: 'Emilys Candy', cursive; font-size: 1.45rem; font-weight: 900;}
-.product-price { font-size: 1.5rem; font-weight: 800; }
-
-/* ADMIN CARD & FORMS */
 .admin-container { max-width: 500px; margin: 0 auto; padding: 20px; text-align: center; }
-.admin-card { background: var(--card-color); border-radius: 25px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-.form-group { margin-bottom: 20px; text-align: left; }
-.form-group label { display: block; font-weight: 800; margin-bottom: 8px; font-size: 0.9rem; }
+.admin-card { background: var(--card-color); border-radius: 25px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+/* FORMS */
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; font-weight: 800; margin-bottom: 5px; font-size: 0.9rem; }
 .form-group input, .form-group textarea, .form-group select { 
-    width: 100% !important; padding: 12px 15px !important; border-radius: 12px !important; border: 2px solid transparent !important; 
-    background: var(--white) !important; color: var(--text-color) !important; outline: none !important; font-family: 'Nunito' !important;
+    width: 100% !important; padding: 12px !important; border-radius: 12px !important; border: none !important; 
+    background: var(--white) !important; color: var(--text-color) !important; font-family: 'Nunito' !important;
 }
-.admin-btn { background: var(--text-color); color: #fff; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Nunito'; }
+
+.admin-btn { 
+    background: var(--text-color); color: #fff; border: none; padding: 12px; 
+    border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; 
+}
 .admin-btn.danger { background: #d9534f; }
 
-/* LISTA DE ITENS NO ADMIN */
-.product-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.3); padding: 12px; border-radius: 15px; margin-bottom: 10px; }
-.category-actions { display: flex; gap: 5px; }
+/* LISTA */
+.product-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.3); padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; }
+.category-actions { display: flex; gap: 8px; }
 .btn-small { padding: 6px 12px !important; width: auto !important; font-size: 0.8rem !important; margin: 0 !important; }
-.btn-edit { background: #5bc0de !important; }
 
-/* MODAL */
+/* O MODAL DE VERDADE (FIXO E CENTRALIZADO) */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);
-    display: none; justify-content: center; align-items: center; z-index: 3000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Escurece o fundo */
+    display: none; /* Escondido */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Fica por cima de TUDO */
 }
-.modal-overlay.open { display: flex; }
-.modal-content { max-width: 350px; transform: scale(0.9); transition: 0.3s; }
 
-@media (min-width: 768px) {
-    .container { max-width: 1200px; }
-    #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-    .info-cards-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+.modal-overlay.open {
+    display: flex; /* Mostra quando a classe .open é adicionada */
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 380px;
+    margin-bottom: 0 !important; /* Remove margem de card comum */
+    animation: scaleUp 0.2s ease-out;
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
