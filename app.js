@@ -2,13 +2,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
-  authDomain: "soraka-constella.firebaseapp.com",
-  projectId: "soraka-constella",
-  storageBucket: "soraka-constella.firebasestorage.app",
-  messagingSenderId: "593569822773",
-  appId: "1:593569822773:web:5d44d9cd41518b7f59597c",
-  measurementId: "G-57JW68RKZL"
+    apiKey: "AIzaSyC1-7TW2qAIyClAvvN54LyY7ubiXV9ajw0",
+    authDomain: "soraka-constella.firebaseapp.com",
+    projectId: "soraka-constella",
+    storageBucket: "soraka-constella.firebasestorage.app",
+    messagingSenderId: "593569822773",
+    appId: "1:593569822773:web:5d44d9cd41518b7f59597c"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -71,7 +70,6 @@ function renderProducts() {
         const ctrlDisplay = inCart ? 'flex' : 'none';
         const qty = inCart ? inCart.qty : 1;
 
-        // Estrutura HTML idêntica à arte da Dona Beatriz
         list.innerHTML += `
             <div class="product-card stagger-item ${delay}" data-id="${prod.id}" data-name="${prod.nome}" data-price="${prod.preco}">
                 <img src="${prod.img}" alt="${prod.nome}" class="product-img">
