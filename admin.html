@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Soraka Constella</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="admin-container">
+        <header>
+            <h1>Painel Gerencial</h1>
+            <div class="subtitle">Soraka Constella</div>
+        </header>
+
+        <div id="login-screen" class="admin-card">
+            <h2 style="text-align: center; margin-bottom: 20px; font-family: 'Fredoka';">Acesso Restrito</h2>
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="login-email" placeholder="email@exemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="login-password" placeholder="••••••••">
+            </div>
+            <button class="admin-btn" id="btn-login">Entrar</button>
+            <p id="login-error" style="color: red; text-align: center; margin-top: 10px; display: none;">Login ou senha inválidos.</p>
+        </div>
+
+        <div id="dashboard-screen">
+            <button class="admin-btn danger" id="btn-logout" style="width: auto; margin-bottom: 20px; float: right;">Sair</button>
+            <div style="clear: both;"></div>
+
+            <div class="admin-card">
+                <h2>⚙️ Configurações da Loja</h2>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Desconto Global em toda a loja (%)</label>
+                    <input type="number" id="global-discount" placeholder="Ex: 10 para 10% de desconto" min="0" max="100">
+                </div>
+                <button class="admin-btn" id="btn-save-config">Salvar Configurações</button>
+            </div>
+
+            <div class="admin-card">
+                <h2>📁 Gestão de Categorias</h2>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Nova Categoria</label>
+                    <input type="text" id="cat-nome" placeholder="Ex: Bolos, Bebidas, Ovos...">
+                </div>
+                <button class="admin-btn" id="btn-add-category">Adicionar Categoria</button>
+                <div id="admin-category-list" style="margin-top: 15px;"></div>
+            </div>
+
+            <div class="admin-card">
+                <h2>➕ Novo Produto no Cardápio</h2>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Nome do Produto</label>
+                    <input type="text" id="prod-nome" placeholder="Ex: Ovo Trufado">
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="prod-cat">
+                        <option value="">Selecione uma categoria...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preço (R$)</label>
+                    <input type="number" id="prod-preco" placeholder="Ex: 55.90" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Link da Imagem (URL)</label>
+                    <input type="text" id="prod-img" placeholder="Cole o link da foto aqui">
+                </div>
+                <div class="form-group">
+                    <label>Descrição detalhada</label>
+                    <textarea id="prod-desc" rows="3" placeholder="Ingredientes, peso, etc..."></textarea>
+                </div>
+                <button class="admin-btn" id="btn-add-product">Adicionar Produto</button>
+            </div>
+
+            <div class="admin-card">
+                <h2>📋 Produtos Cadastrados</h2>
+                <div id="admin-product-list" style="margin-top: 15px;">
+                    <p style="text-align: center;">Carregando produtos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
