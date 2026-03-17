@@ -126,3 +126,62 @@ h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0
     .cart-notes-input { width: 45%; margin-bottom: 0; }
     .cart-actions { width: 55%; }
 }
+/* =========================================
+   ESTILOS DO ADMIN (Área da Beatriz)
+   ========================================= */
+.admin-container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+
+.admin-card { 
+    background: var(--card-color); 
+    border-radius: 20px; 
+    padding: 30px; 
+    margin-bottom: 30px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+}
+
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; font-weight: 800; margin-bottom: 5px; font-family: 'Nunito', sans-serif;}
+.form-group input, .form-group textarea, .form-group select { 
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid transparent; 
+    border-radius: 8px; 
+    font-family: 'Nunito', sans-serif; 
+    font-weight: 600; 
+    background: var(--white); 
+    color: var(--text-color); 
+    outline: none; 
+    transition: 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--text-color); }
+
+.admin-btn { 
+    background: var(--text-color); 
+    color: var(--card-color); 
+    border: none; 
+    padding: 12px 20px; 
+    border-radius: 10px; 
+    font-weight: 800; 
+    cursor: pointer; 
+    width: 100%; 
+    font-size: 1.1rem; 
+    transition: 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.admin-btn:active { transform: scale(0.98); }
+.admin-btn.danger { background: #d9534f; color: white; margin-top: 10px;}
+
+.product-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: var(--bg-color); 
+    padding: 15px; 
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+}
+.product-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover;}
+.product-actions button { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 800;}
+.btn-delete { background: #d9534f; color: white; }
+
+#dashboard-screen { display: none; }
