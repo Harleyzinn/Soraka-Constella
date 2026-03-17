@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin - Doceria da Beatriz</title>
+    <title>Admin - Soraka Constella</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="admin-container">
         <header>
             <h1>Painel Admin</h1>
-            <div class="subtitle">Doceria da Beatriz</div>
+            <div class="subtitle">Soraka Constella</div>
         </header>
 
         <div id="login-screen" class="admin-card">
@@ -25,14 +25,14 @@
             </div>
             <button class="admin-btn" id="btn-login">Entrar</button>
             
-            <a href="index.html" style="display: block; margin-top: 25px; color: var(--text-color); font-weight: 800; text-decoration: none; font-size: 0.9rem;">← Voltar para o Cardápio</a>
+            <a href="index.html" style="display: block; margin-top: 25px; color: var(--text-color); font-weight: 800; text-decoration: none; font-size: 0.9rem; text-align: center;">← Voltar para o Cardápio</a>
             
-            <p id="login-error" style="color: #d9534f; margin-top: 15px; display: none; font-weight: 800;">E-mail ou senha incorretos.</p>
+            <p id="login-error" style="color: #d9534f; margin-top: 15px; display: none; font-weight: 800; text-align: center;">E-mail ou senha incorretos.</p>
         </div>
 
         <div id="dashboard-screen" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <a href="index.html" style="color: var(--text-color); font-weight: 800; text-decoration: none; font-size: 0.95rem;">← Ver Cardápio Ativo</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 12px;">
+                <a href="index.html" style="color: var(--text-color); font-weight: 800; text-decoration: none; font-size: 0.9rem;">← Ver Site Público</a>
                 <button class="admin-btn danger" id="btn-logout" style="width: auto; padding: 8px 18px; margin-top: 0; font-size: 0.9rem;">Sair</button>
             </div>
 
@@ -40,7 +40,7 @@
                 <h2 style="font-family: 'Emilys Candy';">Promoção</h2>
                 <div class="form-group">
                     <label>Desconto Global (%)</label>
-                    <input type="number" id="global-discount" value="0">
+                    <input type="number" id="global-discount">
                 </div>
                 <button class="admin-btn" id="btn-save-config">Salvar Desconto</button>
             </div>
@@ -48,17 +48,17 @@
             <div class="admin-card">
                 <h2 style="font-family: 'Emilys Candy';">Categorias</h2>
                 <div class="form-group">
-                    <label>Nome da Categoria</label>
+                    <label>Nova Categoria</label>
                     <input type="text" id="cat-nome" placeholder="Ex: Ovos de Colher">
                 </div>
-                <button class="admin-btn" id="btn-add-category">Adicionar</button>
+                <button class="admin-btn" id="btn-add-category">Adicionar Categoria</button>
                 <div id="admin-category-list" style="margin-top: 20px;"></div>
             </div>
 
             <div class="admin-card">
                 <h2 style="font-family: 'Emilys Candy';">Novo Produto</h2>
                 <div class="form-group">
-                    <label>Nome</label>
+                    <label>Nome do Produto</label>
                     <input type="text" id="prod-nome">
                 </div>
                 <div class="form-group">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="form-group">
                     <label>URL da Imagem</label>
-                    <input type="text" id="prod-img" placeholder="Link da foto (imgur, etc)">
+                    <input type="text" id="prod-img" placeholder="Link da imagem">
                 </div>
                 <div class="form-group">
                     <label>Descrição</label>
@@ -81,7 +81,7 @@
             </div>
 
             <div class="admin-card">
-                <h2 style="font-family: 'Emilys Candy';">Produtos Cadastrados</h2>
+                <h2 style="font-family: 'Emilys Candy';">Cardápio Ativo</h2>
                 <div id="admin-product-list"></div>
             </div>
         </div>
