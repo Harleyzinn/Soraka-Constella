@@ -19,7 +19,7 @@ let produtosNaMemoria = [];
 let categoriaAtual = 'Todos';
 
 async function init() {
-    // Menu Categorias
+    // Categorias
     const catMenu = document.getElementById('category-filter');
     catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
     const catSnap = await getDocs(collection(db, "categorias"));
@@ -46,14 +46,13 @@ function renderProducts() {
 
     filtrados.forEach(prod => {
         const itemInCart = cart[prod.id];
-        // Formatação de Preço R$ 0,00
         const precoFormatado = prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
         list.innerHTML += `
             <div class="product-card">
                 <img src="${prod.img}" class="product-img" onerror="this.src='https://via.placeholder.com/100?text=Doce'">
                 <div class="product-info-wrapper">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <div class="product-header-row">
                         <div class="product-title">${prod.nome}</div>
                         <div class="product-price">${precoFormatado}</div>
                     </div>
@@ -84,10 +83,13 @@ window.updateQty = (id, n) => {
 };
 
 function updateCartUI() {
-    let total = 0; let texto = "Olá Beatriz! Gostaria de fazer um pedido:\n\n";
+    let total = 0; 
+    let texto = "Olá Beatriz! Gostaria de fazer um pedido na Soraka Constella:\n\n";
+    
     Object.values(cart).forEach(i => {
         total += i.preco * i.qty;
-        texto += `▪️ ${i.qty}x ${i.nome} - ${(i.preco * i.qty).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
+        const subtotal = i.preco * i.qty;
+        texto += `▪️ ${i.qty}x ${i.nome} - ${subtotal.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
     });
 
     const bar = document.getElementById('cart-bar');
@@ -95,8 +97,8 @@ function updateCartUI() {
         bar.classList.add('visible');
         document.getElementById('total-price').innerText = total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
         const notas = document.getElementById('order-notes').value;
-        if(notas) texto += `\n*Obs:* ${notas}`;
-        texto += `\n\n*Total: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
+        if(notas) texto += `\n*Observações:* ${notas}`;
+        texto += `\n\n*Total do Pedido: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
         document.getElementById('checkout-btn').href = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
     } else {
         bar.classList.remove('visible');
