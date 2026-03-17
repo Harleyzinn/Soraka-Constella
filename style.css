@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Elsie+Swash+Caps:wght@400;900&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-    --bg-color: #edece4; /* Fundo creme exato da arte */
-    --card-color: #f5cece; /* Fundo rosa dos cartões */
-    --text-color: #965b4c; /* Marrom dos textos */
+    --bg-color: #edece4; 
+    --card-color: #f5cece; 
+    --text-color: #965b4c; 
     --white: #ffffff;
     --btn-color: #965b4c;
     --success: #25d366;
@@ -22,15 +22,15 @@ body {
 }
 
 /* =========================================
-   ESTRUTURA PRINCIPAL
+   ESTRUTURA PRINCIPAL (SITE DO CLIENTE)
    ========================================= */
 .container { max-width: 480px; margin: 0 auto; padding: 20px; }
 
 header { text-align: center; margin-bottom: 40px; margin-top: 10px; }
-h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0; line-height: 1; font-weight: 900;}
+h1 { font-family: 'Emilys Candy', cursive; font-size: 3.5rem; margin-bottom: 0; line-height: 1; font-weight: 900;}
 .subtitle { font-family: 'Nunito', sans-serif; font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; font-weight: 800;}
 
-.bunny-icon { width: 65px; margin-top: 15px; }
+.bunny-icon { width: 65px; margin-top: 15px; cursor: pointer; -webkit-tap-highlight-color: transparent;}
 
 /* Menu de Categorias */
 .category-menu { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; -ms-overflow-style: none; scrollbar-width: none; }
@@ -38,51 +38,14 @@ h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0
 .cat-btn { background: transparent; border: 2px solid var(--text-color); color: var(--text-color); padding: 6px 16px; border-radius: 20px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; white-space: nowrap; transition: 0.3s; }
 .cat-btn.active, .cat-btn:hover { background: var(--text-color); color: var(--card-color); }
 
-/* Cartões de Produto - IDÊNTICO À ARTE */
-.product-card { 
-    background-color: var(--card-color); 
-    border-radius: 25px; 
-    padding: 20px; 
-    margin-bottom: 25px; 
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
-}
-.product-img { 
-    width: 100px; 
-    height: 100px; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    flex-shrink: 0;
-}
-.product-info-wrapper { 
-    flex: 1; 
-    display: flex; 
-    flex-direction: column; 
-}
-.product-header-row { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: baseline; 
-    margin-bottom: 5px; 
-}
-.product-title { 
-    font-family: 'Elsie Swash Caps', serif; 
-    font-size: 1.45rem; 
-    line-height: 1.1; 
-    font-weight: 900;
-}
-.product-price { 
-    font-family: 'Nunito', sans-serif; 
-    font-size: 1.5rem; 
-    font-weight: 800; 
-}
-.product-desc { 
-    font-size: 0.75rem; 
-    opacity: 0.9; 
-    margin-bottom: 12px; 
-    font-weight: 600;
-}
+/* Cartões de Produto */
+.product-card { background-color: var(--card-color); border-radius: 25px; padding: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+.product-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--text-color);}
+.product-info-wrapper { flex: 1; display: flex; flex-direction: column; }
+.product-header-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+.product-title { font-family: 'Emilys Candy', cursive; font-size: 1.45rem; line-height: 1.1; font-weight: 900;}
+.product-price { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; }
+.product-desc { font-size: 0.75rem; opacity: 0.9; margin-bottom: 12px; font-weight: 600;}
 
 .add-btn { background-color: var(--btn-color); color: var(--card-color); border: none; border-radius: 10px; padding: 6px 12px; font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer; transition: transform 0.2s; width: 100%; font-size: 0.9rem;}
 .add-btn:active { transform: scale(0.98); }
@@ -94,9 +57,9 @@ h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0
 
 /* Informações */
 .info-section { margin-top: 50px; }
-.info-title { font-family: 'Elsie Swash Caps', serif; font-size: 2.8rem; text-align: center; margin-bottom: 10px; font-weight: 900;}
+.info-title { font-family: 'Emilys Candy', cursive; font-size: 2.8rem; text-align: center; margin-bottom: 10px; font-weight: 900;}
 .info-card { background-color: var(--card-color); border-radius: 20px; padding: 25px 20px; text-align: center; margin-bottom: 20px; }
-.info-card h3 { font-family: 'Elsie Swash Caps', serif; font-size: 1.8rem; margin-bottom: 15px; font-weight: 900; letter-spacing: 1px;}
+.info-card h3 { font-family: 'Emilys Candy', cursive; font-size: 1.8rem; margin-bottom: 15px; font-weight: 900; letter-spacing: 1px;}
 .info-card p, .info-card ul { font-size: 0.95rem; list-style: none; line-height: 1.6; font-weight: 600; opacity: 0.9;}
 
 /* Carrinho Flutuante */
@@ -109,25 +72,13 @@ h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0
 .cart-total strong { font-size: 1.5rem; color: var(--text-color); font-weight: 800;}
 .checkout-btn { background-color: var(--success); color: white; text-decoration: none; padding: 14px 22px; border-radius: 15px; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
 
-/* Animações e Utilitários */
+/* Animações */
 .stagger-item { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 .delay-1 { animation-delay: 0.2s; } .delay-2 { animation-delay: 0.3s; } .delay-5 { animation-delay: 0.5s; }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-/* Telas Maiores */
-@media (min-width: 768px) {
-    .container { max-width: 1100px; padding: 40px 20px; }
-    #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 25px; }
-    .product-card { margin-bottom: 0; }
-    .info-cards-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
-    .info-card { margin-bottom: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; }
-    .cart-bar { width: 90%; max-width: 800px; left: 50%; bottom: 30px; border-radius: 20px; flex-direction: row; align-items: center; gap: 20px; transform: translate(-50%, 150%); padding: 20px 30px;}
-    .cart-bar.visible { transform: translate(-50%, 0); }
-    .cart-notes-input { width: 45%; margin-bottom: 0; }
-    .cart-actions { width: 55%; }
-}
 /* =========================================
-   ESTILOS DO ADMIN (Área da Beatriz)
+   ESTILOS DO ADMIN (Ocultos no site principal)
    ========================================= */
 .admin-container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
 
@@ -181,7 +132,21 @@ h1 { font-family: 'Elsie Swash Caps', serif; font-size: 3.5rem; margin-bottom: 0
     margin-bottom: 10px; 
 }
 .product-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover;}
-.product-actions button { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 800;}
-.btn-delete { background: #d9534f; color: white; }
+.product-actions button { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 800; background: #d9534f; color: white;}
 
 #dashboard-screen { display: none; }
+
+/* =========================================
+   TELAS MAIORES (PC E TABLET)
+   ========================================= */
+@media (min-width: 768px) {
+    .container { max-width: 1100px; padding: 40px 20px; }
+    #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 25px; }
+    .product-card { margin-bottom: 0; }
+    .info-cards-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+    .info-card { margin-bottom: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .cart-bar { width: 90%; max-width: 800px; left: 50%; bottom: 30px; border-radius: 20px; flex-direction: row; align-items: center; gap: 20px; transform: translate(-50%, 150%); padding: 20px 30px;}
+    .cart-bar.visible { transform: translate(-50%, 0); }
+    .cart-notes-input { width: 45%; margin-bottom: 0; }
+    .cart-actions { width: 55%; }
+}
