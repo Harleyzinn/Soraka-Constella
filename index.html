@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio - Doceria da Beatriz</title>
+    <title>Soraka Constella - Cardápio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
     <div class="container">
         <header class="stagger-item delay-1">
             <h1>Cardápio</h1>
-            <div class="subtitle">Doceria da Beatriz</div>
-            <svg class="bunny-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="subtitle">Soraka Constella</div>
+            <svg class="bunny-icon" onclick="window.triggerEasterEgg()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 1.2-1.6L14 8h.1A5.9 5.9 0 0 1 20 14v3a4 4 0 0 1-2 4z"></path>
                 <path d="M13 14h.01"></path>
                 <path d="M12.5 8 10 3.5a1 1 0 1 0-1.7 1l2.5 4"></path>
@@ -49,6 +49,8 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; padding-bottom: 20px;">
+                <a href="politica-privacidade.html" style="color: var(--text-color); font-size: 0.9rem; font-weight: bold; text-decoration: underline;">Política de Privacidade</a>
+                <span style="color: var(--text-color); margin: 0 10px; opacity: 0.5;">|</span>
                 <a href="admin.html" style="color: var(--text-color); font-size: 0.9rem; font-weight: bold; text-decoration: underline;">Área do Admin</a>
             </div>
         </section>
@@ -58,7 +60,7 @@
         <input type="text" id="order-notes" class="cart-notes-input" placeholder="Observações? (Ex: Tradicional ao leite)" oninput="window.updateCartUI()">
         <div class="cart-actions">
             <div class="cart-total">
-                <span>Total do pedido:</span>
+                <span>Total:</span>
                 <strong id="total-price">R$ 0,00</strong>
             </div>
             <a href="#" class="checkout-btn" id="checkout-btn" target="_blank">
