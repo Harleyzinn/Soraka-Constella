@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// Suas credenciais oficiais do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCl-7TW2qAIyCLAvvN54LyY7ubiXV9ajw0",
     authDomain: "soraka-constella.firebaseapp.com",
@@ -17,9 +16,6 @@ const db = getFirestore(app);
 
 const cart = {};
 const phone = "5511953425657";
-let isMagicActive = false;
-let bunnyClicks = 0;
-let clickTimer;
 let descontoGlobal = 0;
 
 let produtosNaMemoria = []; 
@@ -70,21 +66,22 @@ function renderProducts() {
 
     produtosFiltrados.forEach((prod, index) => {
         const delay = `delay-${(index % 5) + 2}`; 
-        
         const inCart = cart[prod.id];
         const btnDisplay = inCart ? 'none' : 'block';
         const ctrlDisplay = inCart ? 'flex' : 'none';
         const qty = inCart ? inCart.qty : 1;
 
+        // Estrutura HTML idêntica à arte da Dona Beatriz
         list.innerHTML += `
             <div class="product-card stagger-item ${delay}" data-id="${prod.id}" data-name="${prod.nome}" data-price="${prod.preco}">
                 <img src="${prod.img}" alt="${prod.nome}" class="product-img">
-                <div class="product-info">
-                    <div class="product-header">
+                <div class="product-info-wrapper">
+                    <div class="product-header-row">
                         <div class="product-title">${prod.nome}</div>
-                        <div class="product-price">R$${prod.preco.toFixed(2)}</div>
+                        <div class="product-price">R$${prod.preco.toFixed(0)}</div>
                     </div>
                     <div class="product-desc">${prod.desc}</div>
+                    
                     <button class="add-btn" style="display:${btnDisplay}" onclick="window.addToCart('${prod.id}')">Adicionar</button>
                     <div class="qty-controls" style="display:${ctrlDisplay}" id="controls-${prod.id}">
                         <button class="qty-btn" onclick="window.updateQty('${prod.id}', -1)">-</button>
@@ -155,21 +152,6 @@ window.updateCartUI = () => {
         document.getElementById('checkout-btn').href = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
     } else {
         cartBar.classList.remove('visible');
-    }
-};
-
-window.triggerEasterEgg = () => {
-    if (isMagicActive) return; 
-    bunnyClicks++;
-    clearTimeout(clickTimer);
-    if (bunnyClicks === 5) {
-        isMagicActive = true; document.body.classList.add('theme-magic');
-        const toast = document.getElementById('toast');
-        toast.innerText = "✨ Você descobriu o tema da Constelação!";
-        toast.classList.add('show');
-        setTimeout(() => { toast.classList.remove('show'); }, 3500);
-    } else {
-        clickTimer = setTimeout(() => { bunnyClicks = 0; }, 1000);
     }
 };
 
