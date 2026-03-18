@@ -1,58 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soraka Constella - Cardápio de Páscoa</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Cardápio</h1>
-            <div class="subtitle">Soraka Constella</div>
-            <svg class="bunny-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 1.2-1.6L14 8h.1A5.9 5.9 0 0 1 20 14v3a4 4 0 0 1-2 4z"></path>
-                <path d="M13 14h.01"></path>
-                <path d="M12.5 8 10 3.5a1 1 0 1 0-1.7 1l2.5 4"></path>
-            </svg>
-        </header>
-
-        <div class="category-menu" id="category-filter">
-            </div>
-
-        <main id="product-list">
-            <p style="text-align: center; font-weight: bold;">Carregando delícias...</p>
-        </main>
-
-        <section class="info-section">
-            <h2 class="info-title">Informações</h2>
-            <div class="info-cards-wrapper">
-                <div class="info-card"><h3>Pagamentos</h3><p>Crédito • PIX • Dinheiro</p></div>
-                <div class="info-card"><h3>Contato</h3><p>Beatriz Pereira<br>(11) 95342-5657</p></div>
-                <div class="info-card"><h3>Chocolate</h3><p>Nobre Sicao e Callebaut. Zero Açúcar Melken.</p></div>
-                <div class="info-card"><h3>Sabores</h3><p>Brigadeiro • Nutella • Maracujá • Coco</p></div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 50px; padding-bottom: 30px;">
-                <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Política de Privacidade</a>
-                <span style="margin: 0 15px; opacity: 0.3;">|</span>
-                <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Área do Admin</a>
-            </div>
-        </section>
-    </div>
-
-    <div class="cart-bar" id="cart-bar">
-        <input type="text" id="order-notes" class="cart-notes-input" placeholder="Deseja alguma observação no pedido?">
-        <div class="cart-actions">
-            <div class="cart-total">
-                <span>Total:</span><br>
-                <strong id="total-price">R$ 0,00</strong>
-            </div>
-            <a href="#" class="checkout-btn" id="checkout-btn" target="_blank">Fazer Pedido</a>
+<section class="info-section">
+    <h2 class="info-title">Informações</h2>
+    
+    <div class="info-cards-wrapper"> 
+        <div class="info-card">
+            <h3>Pagamentos</h3>
+            <p>Crédito • PIX • Dinheiro</p>
+        </div>
+        <div class="info-card">
+            <h3>Contato</h3>
+            <p>Beatriz Pereira<br>(11) 95342-5657</p>
+        </div>
+        <div class="info-card">
+            <h3>Chocolate</h3>
+            <p>Trabalhamos com chocolate nobre Sicao e Callebaut.</p>
+        </div>
+        <div class="info-card">
+            <h3>Destaques</h3>
+            <p>Ovos de Colher • Trufas<br>Barras Recheadas</p>
         </div>
     </div>
 
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+    <div style="text-align: center; margin-top: 50px; padding-bottom: 30px;">
+        <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Política de Privacidade</a>
+        <span style="margin: 0 15px; opacity: 0.3;">|</span>
+        <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Área do Admin</a>
+    </div>
+</section>
