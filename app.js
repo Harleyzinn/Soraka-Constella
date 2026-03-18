@@ -19,7 +19,6 @@ let produtosNaMemoria = [];
 let categoriaAtual = 'Todos';
 
 async function init() {
-    // Categorias
     const catMenu = document.getElementById('category-filter');
     catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
     const catSnap = await getDocs(collection(db, "categorias"));
@@ -27,7 +26,6 @@ async function init() {
         catMenu.innerHTML += `<button class="cat-btn" onclick="window.filterCategory('${d.data().nome}')">${d.data().nome}</button>`;
     });
 
-    // Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     produtosNaMemoria = prodSnap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderProducts();
@@ -47,9 +45,23 @@ function renderProducts() {
     filtrados.forEach(prod => {
         const itemInCart = cart[prod.id];
         const precoFormatado = prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const estaEsgotado = prod.esgotado === true;
+
+        let actionArea = '';
+        if (estaEsgotado) {
+            actionArea = `<button class="add-btn" disabled>Esgotado</button>`;
+        } else {
+            actionArea = `
+                <button class="add-btn" style="display:${itemInCart ? 'none' : 'block'}" onclick="window.addToCart('${prod.id}')">Adicionar</button>
+                <div class="qty-controls" style="display:${itemInCart ? 'flex' : 'none'}">
+                    <button class="qty-btn" onclick="window.updateQty('${prod.id}', -1)">-</button>
+                    <span style="font-weight:800">${itemInCart ? itemInCart.qty : 0}</span>
+                    <button class="qty-btn" onclick="window.updateQty('${prod.id}', 1)">+</button>
+                </div>`;
+        }
 
         list.innerHTML += `
-            <div class="product-card">
+            <div class="product-card ${estaEsgotado ? 'esgotado' : ''}">
                 <img src="${prod.img}" class="product-img" onerror="this.src='https://via.placeholder.com/100?text=Doce'">
                 <div class="product-info-wrapper">
                     <div class="product-header-row">
@@ -57,12 +69,7 @@ function renderProducts() {
                         <div class="product-price">${precoFormatado}</div>
                     </div>
                     <div class="product-desc">${prod.desc}</div>
-                    <button class="add-btn" style="display:${itemInCart ? 'none' : 'block'}" onclick="window.addToCart('${prod.id}')">Adicionar</button>
-                    <div class="qty-controls" style="display:${itemInCart ? 'flex' : 'none'}">
-                        <button class="qty-btn" onclick="window.updateQty('${prod.id}', -1)">-</button>
-                        <span style="font-weight:800">${itemInCart ? itemInCart.qty : 0}</span>
-                        <button class="qty-btn" onclick="window.updateQty('${prod.id}', 1)">+</button>
-                    </div>
+                    ${actionArea}
                 </div>
             </div>`;
     });
@@ -85,11 +92,9 @@ window.updateQty = (id, n) => {
 function updateCartUI() {
     let total = 0; 
     let texto = "Olá Beatriz! Gostaria de fazer um pedido na Soraka Constella:\n\n";
-    
     Object.values(cart).forEach(i => {
         total += i.preco * i.qty;
-        const subtotal = i.preco * i.qty;
-        texto += `▪️ ${i.qty}x ${i.nome} - ${subtotal.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
+        texto += `▪️ ${i.qty}x ${i.nome} - ${(i.preco * i.qty).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
     });
 
     const bar = document.getElementById('cart-bar');
