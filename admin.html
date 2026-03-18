@@ -3,46 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Soraka Constella</title>
+    <title>Painel Admin - Soraka Constella</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="admin-container">
         <header>
             <h1>Painel Admin</h1>
+            <div class="subtitle">Soraka Constella</div>
         </header>
 
         <div id="login-screen" class="admin-card">
             <div class="form-group"><label>E-mail</label><input type="email" id="login-email"></div>
             <div class="form-group"><label>Senha</label><input type="password" id="login-password"></div>
             <button class="admin-btn" id="btn-login">Entrar</button>
+            <a href="index.html" style="display:block; margin-top:15px; color:var(--text-color); font-weight:800; text-align:center;">← Voltar ao Cardápio</a>
         </div>
 
         <div id="dashboard-screen" style="display:none;">
-            <div style="display:flex; gap:10px; margin-bottom:20px;">
-                <button class="admin-btn danger" id="btn-logout">Sair</button>
-                <a href="index.html" class="admin-btn" style="text-decoration:none; text-align:center;">Ver Site</a>
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <a href="index.html" style="font-weight:800; color:var(--text-color);">← Ver Site Público</a>
+                <button class="admin-btn danger" id="btn-logout" style="width:auto; margin:0; padding:8px 15px;">Sair</button>
             </div>
 
             <div class="admin-card">
-                <h2>Produtos</h2>
+                <h2 style="font-family:'Emilys Candy'; margin-bottom:15px;">Categorias</h2>
+                <div id="form-cat-add">
+                    <div class="form-group"><input type="text" id="cat-nome" placeholder="Nova Categoria"></div>
+                    <button class="admin-btn" id="btn-add-cat">Adicionar Categoria</button>
+                </div>
+                <div id="form-cat-edit" style="display:none;">
+                    <input type="hidden" id="edit-cat-id">
+                    <div class="form-group"><input type="text" id="edit-cat-nome"></div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="admin-btn success" id="btn-save-cat">Salvar</button>
+                        <button class="admin-btn danger" onclick="window.cancelEditCat()">Cancelar</button>
+                    </div>
+                </div>
+                <div id="list-categorias" style="margin-top:15px;"></div>
+            </div>
+
+            <div class="admin-card">
+                <h2 style="font-family:'Emilys Candy'; margin-bottom:15px;">Produtos</h2>
                 <div id="form-prod-box">
                     <input type="hidden" id="edit-prod-id">
                     <div class="form-group"><label>Nome</label><input type="text" id="p-nome"></div>
                     <div class="form-group"><label>Categoria</label><select id="p-cat"></select></div>
-                    <div class="form-group"><label>Preço</label><input type="number" id="p-preco" step="0.01"></div>
-                    <div class="form-group"><label>Imagem (Link)</label><input type="text" id="p-img"></div>
+                    <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco" step="0.01"></div>
+                    <div class="form-group"><label>Link Imagem</label><input type="text" id="p-img"></div>
                     <div class="form-group"><label>Descrição</label><textarea id="p-desc" rows="2"></textarea></div>
-                    <div class="form-group" style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.3); padding:10px; border-radius:10px;">
-                        <input type="checkbox" id="p-esgotado" style="width:20px; height:20px;">
-                        <label for="p-esgotado" style="margin:0;">Esgotado?</label>
+                    
+                    <div class="form-group" style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.2); padding:10px; border-radius:10px;">
+                        <input type="checkbox" id="p-esgotado" style="width:20px !important;">
+                        <label for="p-esgotado" style="margin:0;">Produto Esgotado?</label>
                     </div>
-                    <button class="admin-btn success" id="btn-save-prod">Salvar</button>
+
+                    <button class="admin-btn" id="btn-save-prod">Salvar Produto</button>
+                    <button class="admin-btn danger" id="btn-cancel-prod" style="display:none;" onclick="window.cancelEditProd()">Cancelar Edição</button>
                 </div>
                 <div id="list-produtos" style="margin-top:20px;"></div>
             </div>
         </div>
     </div>
+
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content admin-card">
+            <h3 style="font-family:'Emilys Candy'; margin-bottom:15px;">Tem certeza?</h3>
+            <p style="margin-bottom:20px; font-weight:700;">Isso vai apagar o item permanentemente.</p>
+            <div style="display:flex; gap:10px;">
+                <button class="admin-btn danger" id="confirm-del-btn">Sim, Excluir</button>
+                <button class="admin-btn" onclick="document.getElementById('confirm-modal').classList.remove('open')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content admin-card">
+            <div style="font-size:3rem; margin-bottom:10px;">✨</div>
+            <h3 style="font-family:'Emilys Candy'; margin-bottom:10px;">Sucesso!</h3>
+            <p style="margin-bottom:20px; font-weight:700;">Dados atualizados no site.</p>
+            <button class="admin-btn" onclick="document.getElementById('success-modal').classList.remove('open')">Beleza!</button>
+        </div>
+    </div>
+
     <script type="module" src="admin.js"></script>
 </body>
 </html>
