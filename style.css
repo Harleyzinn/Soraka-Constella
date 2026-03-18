@@ -76,7 +76,7 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .cat-btn.active { background: var(--text-color); color: var(--card-color); }
 
 /* =========================================
-   4. CARDS DE PRODUTO
+   4. CARDS DE PRODUTO (REVISADO ANTI-ENCAVALO)
    ========================================= */
 .product-card { 
     background-color: var(--card-color); 
@@ -86,9 +86,10 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
     display: flex; 
     align-items: flex-start; 
     gap: 15px; 
-    position: relative;
-    transition: 0.3s;
 }
+
+/* Lógica de Esgotado nos Cards */
+.product-card.esgotado-card { opacity: 0.6; filter: grayscale(1); }
 
 .product-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--text-color); flex-shrink: 0; }
 .product-info-wrapper { flex: 1; min-width: 0; }
@@ -107,16 +108,13 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .product-desc { font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; opacity: 0.9; }
 
 .add-btn { background: var(--btn-color); color: white; border: none; padding: 12px; border-radius: 15px; width: 100%; font-weight: 800; cursor: pointer; }
+.add-btn:disabled { background: #bbb !important; cursor: not-allowed; }
 
 .qty-controls { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.4); border-radius: 12px; padding: 5px; }
 .qty-btn { background: var(--text-color); color: white; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-weight: 800; }
 
-/* ESTILO NOVO: ESGOTADO */
-.product-card.esgotado { opacity: 0.6; filter: grayscale(1); }
-.add-btn:disabled { background: #bbb !important; cursor: not-allowed; }
-
 /* =========================================
-   5. INFORMAÇÕES (RODAPÉ)
+   5. INFORMAÇÕES (RODAPÉ DO SITE - 4 COLUNAS PC)
    ========================================= */
 .info-section { margin-top: 60px; text-align: center; }
 .info-title { font-family: 'Emilys Candy', cursive; font-size: 2.8rem; margin-bottom: 30px; }
@@ -132,7 +130,7 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .info-card p { font-weight: 700; line-height: 1.6; }
 
 /* =========================================
-   6. PAINEL ADMIN
+   6. PAINEL ADMIN (ESTILIZAÇÃO COMPLETA)
    ========================================= */
 .admin-card { 
     background-color: var(--card-color) !important; 
@@ -157,15 +155,16 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .admin-btn.danger { background-color: var(--danger) !important; }
 .admin-btn.success { background-color: var(--success) !important; }
 
-.item-list-row { 
+/* Listas do Admin (Categorias e Produtos) */
+.item-list-row, .product-item { 
     display: flex !important; justify-content: space-between !important; align-items: center !important; 
     background: rgba(255,255,255,0.4) !important; padding: 12px 15px !important; border-radius: 15px !important; 
     margin-bottom: 10px !important; text-align: left;
 }
 
-.item-actions { display: flex; gap: 8px; }
+.btn-row, .item-actions { display: flex; gap: 8px; }
 
-.btn-tool { 
+.btn-tool, .btn-action { 
     padding: 8px 12px !important; border: none !important; border-radius: 8px !important; 
     font-weight: 800 !important; font-size: 0.8rem !important; cursor: pointer !important; 
     color: #fff !important; width: auto !important; margin: 0 !important;
@@ -174,7 +173,7 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .btn-del { background-color: var(--danger) !important; }
 
 /* =========================================
-   7. CARRINHO FLUTUANTE
+   7. NOVO CARRINHO FLUTUANTE (ESTILO iFOOD)
    ========================================= */
 .cart-bar { 
     position: fixed !important; 
@@ -199,7 +198,7 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .checkout-btn { background-color: var(--btn-color) !important; color: var(--white) !important; padding: 14px 22px; border-radius: 18px; font-weight: 800; text-decoration: none; display: flex; gap: 8px; justify-content: center; }
 
 /* =========================================
-   8. MODAIS
+   8. MODAIS (FIXO E CENTRALIZADO)
    ========================================= */
 .modal-overlay { 
     position: fixed !important; top: 0 !important; left: 0 !important; 
@@ -211,15 +210,39 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
 .modal-overlay.open { display: flex !important; }
 .modal-content { 
     width: 90% !important; 
-    max-width: 450px !important; 
+    max-width: 450px !important; /* Trava largura do modal no PC */
     margin-bottom: 0 !important; 
     animation: scaleUp 0.3s forwards; 
 }
 @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 /* =========================================
-   9. AJUSTES PARA PC
+   9. AJUSTES PARA PC E CELULAR (RESPONSIVIDADE)
    ========================================= */
+
+/* Ajustes específicos para Celular */
+@media (max-width: 767px) {
+    h1 { font-size: 2.4rem; }
+    .product-card { padding: 15px; gap: 10px; }
+    .product-img { width: 70px; height: 70px; }
+    .product-title { font-size: 1.2rem; }
+    .product-price { font-size: 1.1rem; }
+    
+    /* Faz o carrinho ocupar a largura toda no rodapé do celular */
+    .cart-bar { 
+        bottom: 0 !important; 
+        left: 0 !important; 
+        right: 0 !important; 
+        width: 100% !important; 
+        max-width: none !important; 
+        border-radius: 20px 20px 0 0 !important; 
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+    }
+}
+
+/* Ajustes para PC */
 @media (min-width: 768px) {
     .container { max-width: 1200px; }
     .admin-container { max-width: 900px; } 
@@ -233,5 +256,12 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
     }
     .info-card { margin-bottom: 0 !important; min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
 
-    .cart-bar { width: 600px !important; max-width: 600px !important; left: 50% !important; transform: translateX(-50%) !important; bottom: 30px !important; border-radius: 25px !important; }
+    .cart-bar { 
+        width: 600px !important; 
+        max-width: 600px !important; 
+        left: 50% !important; 
+        transform: translateX(-50%) !important; 
+        bottom: 30px !important; 
+        border-radius: 25px !important; 
+    }
 }
