@@ -1,6 +1,3 @@
-/* =========================================
-   FONTES E VARIÁVEIS
-   ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
@@ -21,129 +18,94 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    padding-bottom: 220px; /* Mais espaço para o novo carrinho flutuante */
+    padding-bottom: 200px; /* Espaço para o carrinho flutuante */
     overflow-x: hidden;
 }
 
-.container, .admin-container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
+/* =========================================
+   ESTRUTURA BASE
+   ========================================= */
+.container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
+.admin-container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
 
-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; }
-h1 { font-family: 'Emilys Candy', cursive; font-size: 3rem; font-weight: 900; }
-.subtitle { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; margin-top: 5px; }
+header { text-align: center; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; }
+h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; color: var(--text-color); }
+.subtitle { font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 800; margin-top: 10px; }
+.bunny-icon { width: 60px !important; height: 60px !important; margin-top: 15px; display: block; }
 
-/* Trava o coelho */
-.bunny-icon { width: 60px !important; height: 60px !important; margin-top: 10px; display: block; }
-
-/* CATEGORIAS SITE */
-.category-menu { display: flex; gap: 10px; overflow-x: auto; padding: 10px 5px; margin-bottom: 25px; scrollbar-width: none; justify-content: start;}
+/* CATEGORIAS */
+.category-menu { display: flex; gap: 12px; overflow-x: auto; padding: 10px 5px; margin-bottom: 25px; scrollbar-width: none; }
 .cat-btn { background: transparent; border: 2px solid var(--text-color); color: var(--text-color); padding: 8px 18px; border-radius: 25px; font-weight: 800; cursor: pointer; white-space: nowrap; }
 .cat-btn.active { background: var(--text-color); color: var(--card-color); }
 
 /* CARDS DE PRODUTO */
-.product-card { 
-    background-color: var(--card-color); border-radius: 25px; padding: 18px; 
-    margin-bottom: 20px; display: flex; align-items: flex-start; gap: 15px; 
-}
+.product-card { background-color: var(--card-color); border-radius: 25px; padding: 20px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 15px; }
 .product-img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 2px solid var(--text-color); flex-shrink: 0; }
 .product-info-wrapper { flex: 1; min-width: 0; }
 .product-header-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 5px; margin-bottom: 8px; }
 .product-title { font-family: 'Emilys Candy', cursive; font-size: 1.4rem; font-weight: 900; word-break: break-word; }
-.product-price { font-size: 1.25rem; font-weight: 800; white-space: nowrap;}
-.product-desc { font-size: 0.8rem; margin-bottom: 12px; font-weight: 600; opacity: 0.9; }
+.product-price { font-size: 1.25rem; font-weight: 800; white-space: nowrap; }
+.add-btn { background: var(--btn-color); color: white; border: none; padding: 12px; border-radius: 15px; width: 100%; font-weight: 800; cursor: pointer; }
 
-/* BOTÕES SITE */
-.add-btn { background: var(--btn-color); color: white; border: none; padding: 10px; border-radius: 12px; width: 100%; font-weight: 800; cursor: pointer; }
-.qty-controls { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.4); border-radius: 12px; padding: 5px; }
-.qty-btn { background: var(--text-color); color: white; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-weight: 800; }
-
-/* INFORMAÇÕES */
+/* INFORMAÇÕES (RODAPÉ) */
 .info-section { margin-top: 60px; text-align: center; }
 .info-title { font-family: 'Emilys Candy', cursive; font-size: 2.8rem; margin-bottom: 30px; }
-.info-card { background-color: var(--card-color) !important; border-radius: 30px !important; padding: 30px !important; margin-bottom: 20px !important; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-.info-card h3 { font-family: 'Emilys Candy', cursive; font-size: 1.8rem; margin-bottom: 10px; }
+.info-card { 
+    background-color: var(--card-color) !important; 
+    border-radius: 30px !important; 
+    padding: 30px !important; 
+    margin-bottom: 20px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+}
+.info-card h3 { font-family: 'Emilys Candy', cursive; font-size: 1.8rem; margin-bottom: 12px; }
 .info-card p { font-weight: 700; line-height: 1.6; }
 
-/* =========================================
-   NOVO CARRINHO FLUTUANTE (BLINDADO E BONITO)
-   ========================================= */
+/* CARRINHO NOVO FLUTUANTE (BLINDADO) */
 .cart-bar { 
     position: fixed !important; 
-    bottom: 20px !important; /* Flutuando no rodapé */
+    bottom: 20px !important; 
     left: 20px !important; 
     right: 20px !important; 
-    width: calc(100% - 40px) !important; /* Ajusta largura no mobile */
-    max-width: 440px; /* Não estoura no mobile */
+    width: calc(100% - 40px) !important; 
+    max-width: 440px; 
     margin: 0 auto;
-    
-    background-color: var(--card-color) !important; /* Fundo Rosa Pastel */
-    border: 2px solid var(--text-color) !important; /* Borda Marrom */
+    background-color: var(--card-color) !important; 
+    border: 2px solid var(--text-color) !important; 
     padding: 20px !important; 
-    border-radius: 30px !important; /* Mega arredondado */
-    
-    display: none; /* Só aparece quando tem item via JS */
-    flex-direction: column; 
-    gap: 15px; 
-    
-    z-index: 9999 !important; 
-    box-shadow: 0 10px 30px rgba(150, 91, 76, 0.25) !important; /* Sombra Marrom suave */
+    border-radius: 30px !important; 
+    display: none; flex-direction: column; gap: 15px; z-index: 9999 !important; 
+    box-shadow: 0 10px 30px rgba(150, 91, 76, 0.25) !important; 
 }
 .cart-bar.visible { display: flex !important; }
-
-/* Caixa de notas interna */
-.cart-notes-input { 
-    width: 100%; 
-    padding: 12px; 
-    border: none !important; 
-    border-radius: 15px; 
-    background-color: var(--white) !important; /* Fundo Branco pra input */
-    font-family: inherit; 
-    font-weight: 600; 
-    color: var(--text-color);
-}
-
-.cart-actions { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; }
-
-/* Estilo do Total */
-.cart-total { text-align: left; }
-.cart-total span { font-family: 'Emilys Candy'; font-size: 1rem; color: var(--text-color); }
+.cart-total span { font-family: 'Emilys Candy'; font-size: 1rem; }
 .cart-total strong { font-size: 1.6rem; font-weight: 800; color: var(--text-color); }
+.checkout-btn { background-color: var(--btn-color) !important; color: var(--white) !important; text-decoration: none !important; padding: 14px 22px; border-radius: 18px; font-weight: 800; display: flex; gap: 8px; align-items: center; justify-content: center; }
 
-/* Botão Fazer Pedido Estilizado */
-.checkout-btn { 
-    background-color: var(--btn-color) !important; /* Marrom da marca */
-    color: var(--white) !important; 
-    text-decoration: none !important; 
-    padding: 12px 20px; 
-    border-radius: 15px; 
-    font-weight: 800; 
-    display: flex; gap: 8px; align-items: center; justify-content: center;
-    border: 2px solid transparent;
-}
-.checkout-btn:active { transform: scale(0.97); }
+/* PAINEL ADMIN */
+.admin-card { background-color: var(--card-color) !important; border-radius: 25px !important; padding: 25px !important; margin-bottom: 25px !important; text-align: center; }
+.form-group input, .form-group select, .form-group textarea { width: 100% !important; padding: 12px !important; border-radius: 12px !important; border: none !important; background-color: var(--white) !important; color: var(--text-color) !important; font-family: 'Nunito' !important; font-weight: 700; }
+.admin-btn { background-color: var(--text-color); color: var(--white); border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; }
+.item-list-row { display: flex !important; justify-content: space-between !important; align-items: center !important; background: rgba(255,255,255,0.4) !important; padding: 12px 15px !important; border-radius: 15px !important; margin-bottom: 10px !important; }
+.btn-tool { padding: 8px 12px !important; border-radius: 8px !important; font-weight: 800 !important; font-size: 0.8rem !important; cursor: pointer !important; color: #fff !important; width: auto !important; margin: 0 !important; }
+.btn-edit { background-color: var(--edit) !important; }
+.btn-del { background-color: var(--danger) !important; }
 
 /* =========================================
-   PC GRID E RESPONSIVIDADE
+   AJUSTES PARA PC (GRID DE VERDADE)
    ========================================= */
 @media (min-width: 768px) {
     .container { max-width: 1200px; }
-    .admin-container { max-width: 800px; } 
-    #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
-    .info-cards-wrapper { display: grid; grid-template-columns: repeat(4, 1fr)); gap: 20px; }
-    .info-card { margin-bottom: 0 !important; }
-    
-    /* Carrinho Flutuante centralizado no PC */
-    .cart-bar { 
-        width: 600px !important; 
-        max-width: 600px !important;
-        left: 50% !important; 
-        transform: translateX(-50%) !important; 
-        bottom: 30px !important; 
-    }
-}
+    .admin-container { max-width: 900px; } /* Admin maior no PC */
 
-/* ADMIN */
-.admin-card { background-color: var(--card-color); border-radius: 25px; padding: 25px; margin-bottom: 25px; }
-.form-group input, .form-group select, .form-group textarea { width: 100% !important; padding: 12px !important; border-radius: 12px !important; border: none !important; background: #fff !important; font-family: 'Nunito' !important; font-weight: 700; }
-.btn-action { padding: 8px 12px !important; border-radius: 8px !important; font-weight: 800 !important; font-size: 0.8rem !important; color: #fff !important; width: auto !important; margin: 0 !important; }
-.btn-edit { background-color: var(--edit) !important; }
-.btn-del { background-color: var(--danger) !important; }
+    #product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+    
+    /* VOLTA COM A VISUALIZAÇÃO LATERAL */
+    .info-cards-wrapper { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 20px; 
+    }
+    .info-card { margin-bottom: 0 !important; min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
+
+    .cart-bar { width: 600px !important; max-width: 600px !important; left: 50% !important; transform: translateX(-50%) !important; bottom: 30px !important; }
+}
