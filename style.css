@@ -21,7 +21,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    padding-bottom: 220px; /* Espaço para o carrinho flutuante não cobrir nada */
+    padding-bottom: 220px; /* Espaço para o carrinho flutuante */
     overflow-x: hidden;
 }
 
@@ -205,7 +205,12 @@ h1 { font-family: 'Emilys Candy', cursive; font-size: 3.2rem; font-weight: 900; 
     z-index: 10000 !important; 
 }
 .modal-overlay.open { display: flex !important; }
-.modal-content { width: 90% !important; max-width: 400px !important; margin-bottom: 0 !important; animation: scaleUp 0.3s forwards; }
+.modal-content { 
+    width: 90% !important; 
+    max-width: 450px !important; /* Trava largura do modal no PC */
+    margin-bottom: 0 !important; 
+    animation: scaleUp 0.3s forwards; 
+}
 @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 /* =========================================
