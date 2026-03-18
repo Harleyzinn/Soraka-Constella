@@ -45,13 +45,12 @@ function renderProducts() {
     filtrados.forEach(prod => {
         const itemInCart = cart[prod.id];
         const precoFormatado = prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        const estaEsgotado = prod.esgotado === true;
-
-        let actionArea = '';
-        if (estaEsgotado) {
-            actionArea = `<button class="add-btn" disabled>Esgotado</button>`;
+        
+        let botaoHTML = '';
+        if(prod.esgotado) {
+            botaoHTML = `<button class="add-btn" disabled style="background:#bbb; cursor:not-allowed;">Esgotado</button>`;
         } else {
-            actionArea = `
+            botaoHTML = `
                 <button class="add-btn" style="display:${itemInCart ? 'none' : 'block'}" onclick="window.addToCart('${prod.id}')">Adicionar</button>
                 <div class="qty-controls" style="display:${itemInCart ? 'flex' : 'none'}">
                     <button class="qty-btn" onclick="window.updateQty('${prod.id}', -1)">-</button>
@@ -61,7 +60,7 @@ function renderProducts() {
         }
 
         list.innerHTML += `
-            <div class="product-card ${estaEsgotado ? 'esgotado' : ''}">
+            <div class="product-card ${prod.esgotado ? 'esgotado-card' : ''}">
                 <img src="${prod.img}" class="product-img" onerror="this.src='https://via.placeholder.com/100?text=Doce'">
                 <div class="product-info-wrapper">
                     <div class="product-header-row">
@@ -69,7 +68,7 @@ function renderProducts() {
                         <div class="product-price">${precoFormatado}</div>
                     </div>
                     <div class="product-desc">${prod.desc}</div>
-                    ${actionArea}
+                    ${botaoHTML}
                 </div>
             </div>`;
     });
@@ -103,11 +102,10 @@ function updateCartUI() {
         document.getElementById('total-price').innerText = total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
         const notas = document.getElementById('order-notes').value;
         if(notas) texto += `\n*Observações:* ${notas}`;
-        texto += `\n\n*Total do Pedido: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
+        texto += `\n\n*Total: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
         document.getElementById('checkout-btn').href = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
     } else {
         bar.classList.remove('visible');
     }
 }
-
 window.addEventListener('DOMContentLoaded', init);
