@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Soraka Constella</title>
+    <title>Painel Admin - Soraka Constella</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,59 +14,71 @@
         </header>
 
         <div id="login-screen" class="admin-card">
-            <h2 style="font-family: 'Emilys Candy';">Acesso</h2>
             <div class="form-group"><label>E-mail</label><input type="email" id="login-email"></div>
             <div class="form-group"><label>Senha</label><input type="password" id="login-password"></div>
             <button class="admin-btn" id="btn-login">Entrar</button>
-            <a href="index.html" style="display: block; margin-top: 20px; color: var(--text-color); font-weight: 800; text-decoration: none;">← Voltar</a>
+            <a href="index.html" style="display:block; margin-top:15px; color:var(--text-color); font-weight:800; text-align:center;">← Voltar ao Site</a>
         </div>
 
-        <div id="dashboard-screen" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <a href="index.html" style="color: var(--text-color); font-weight: 800; text-decoration: none;">← Ver Site</a>
-                <button class="admin-btn danger" id="btn-logout" style="width: auto; padding: 8px 15px; margin-top: 0;">Sair</button>
+        <div id="dashboard-screen" style="display:none;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <a href="index.html" style="font-weight:800; color:var(--text-color);">← Ver Site Público</a>
+                <button class="admin-btn danger" id="btn-logout" style="width:auto; margin:0; padding:8px 15px;">Sair</button>
             </div>
 
             <div class="admin-card">
-                <h2 style="font-family: 'Emilys Candy';">Categorias</h2>
-                <div id="form-add-cat">
-                    <div class="form-group"><input type="text" id="cat-nome" placeholder="Nova Categoria"></div>
-                    <button class="admin-btn" id="btn-add-category">Adicionar</button>
+                <h2 style="font-family:'Emilys Candy'; margin-bottom:15px;">Categorias</h2>
+                <div id="form-cat-add">
+                    <div class="form-group"><input type="text" id="cat-nome" placeholder="Nome da Categoria"></div>
+                    <button class="admin-btn" id="btn-add-cat">Adicionar</button>
                 </div>
-                <div id="form-edit-cat" style="display:none;">
+                <div id="form-cat-edit" style="display:none;">
                     <input type="hidden" id="edit-cat-id">
                     <div class="form-group"><input type="text" id="edit-cat-nome"></div>
-                    <div style="display: flex; gap: 10px;"><button class="admin-btn" id="btn-save-cat" style="background:#25d366">Salvar</button><button class="admin-btn danger" onclick="window.cancelEditCat()">Cancelar</button></div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="admin-btn success" id="btn-save-cat">Salvar</button>
+                        <button class="admin-btn danger" onclick="window.cancelEditCat()">Cancelar</button>
+                    </div>
                 </div>
-                <div id="admin-category-list" style="margin-top: 15px;"></div>
+                <div id="list-categorias" style="margin-top:20px;"></div>
             </div>
 
             <div class="admin-card">
-                <h2 style="font-family: 'Emilys Candy';">Produtos</h2>
-                <div id="form-add-prod">
-                    <div class="form-group"><label>Nome</label><input type="text" id="prod-nome"></div>
-                    <div class="form-group"><label>Categoria</label><select id="prod-cat"></select></div>
-                    <div class="form-group"><label>Preço</label><input type="number" id="prod-preco" step="0.01"></div>
-                    <div class="form-group"><label>URL Imagem</label><input type="text" id="prod-img"></div>
-                    <div class="form-group"><label>Descrição</label><textarea id="prod-desc"></textarea></div>
-                    <button class="admin-btn" id="btn-add-product">Cadastrar Produto</button>
-                </div>
-                <div id="form-edit-prod" style="display:none; border: 2px solid var(--text-color); padding: 15px; border-radius: 15px;">
-                    <h3>Editando Produto</h3>
+                <h2 style="font-family:'Emilys Candy'; margin-bottom:15px;">Produtos</h2>
+                <div id="form-prod-box">
                     <input type="hidden" id="edit-prod-id">
-                    <div class="form-group"><label>Nome</label><input type="text" id="edit-prod-nome"></div>
-                    <div class="form-group"><label>Preço</label><input type="number" id="edit-prod-preco" step="0.01"></div>
-                    <div class="form-group"><label>URL Imagem</label><input type="text" id="edit-prod-img"></div>
-                    <div class="form-group"><label>Descrição</label><textarea id="edit-prod-desc"></textarea></div>
-                    <div style="display: flex; gap: 10px;"><button class="admin-btn" id="btn-save-prod" style="background:#25d366">Salvar</button><button class="admin-btn danger" onclick="window.cancelEditProd()">Cancelar</button></div>
+                    <div class="form-group"><label>Nome</label><input type="text" id="p-nome"></div>
+                    <div class="form-group"><label>Categoria</label><select id="p-cat"></select></div>
+                    <div class="form-group"><label>Preço</label><input type="number" id="p-preco" step="0.01"></div>
+                    <div class="form-group"><label>Link da Imagem</label><input type="text" id="p-img"></div>
+                    <div class="form-group"><label>Descrição</label><textarea id="p-desc"></textarea></div>
+                    <button class="admin-btn" id="btn-save-prod">Salvar Produto</button>
+                    <button class="admin-btn danger" id="btn-cancel-prod" style="display:none;" onclick="window.cancelEditProd()">Cancelar Edição</button>
                 </div>
-                <div id="admin-product-list" style="margin-top: 15px;"></div>
+                <div id="list-produtos" style="margin-top:20px;"></div>
             </div>
         </div>
     </div>
 
-    <div id="confirm-modal" class="modal-overlay"><div class="modal-content admin-card"><h3>Tem certeza?</h3><div style="display: flex; gap: 10px;"><button class="admin-btn danger" id="btn-confirm-delete">Excluir</button><button class="admin-btn" onclick="document.getElementById('confirm-modal').classList.remove('open')">Cancelar</button></div></div></div>
-    <div id="success-modal" class="modal-overlay"><div class="modal-content admin-card"><h3>✨ Sucesso!</h3><button class="admin-btn" onclick="document.getElementById('success-modal').classList.remove('open')">OK</button></div></div>
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content admin-card">
+            <h3 style="font-family:'Emilys Candy'; margin-bottom:15px;">Apagar item?</h3>
+            <p style="margin-bottom:20px; font-weight:700;">Essa ação não pode ser desfeita.</p>
+            <div style="display:flex; gap:10px;">
+                <button class="admin-btn danger" id="confirm-del-btn">Sim, Excluir</button>
+                <button class="admin-btn" onclick="document.getElementById('confirm-modal').classList.remove('open')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content admin-card">
+            <div style="font-size:3rem; margin-bottom:10px;">✨</div>
+            <h3 style="font-family:'Emilys Candy'; margin-bottom:10px;">Sucesso!</h3>
+            <p style="margin-bottom:20px; font-weight:700;">Operação realizada com êxito.</p>
+            <button class="admin-btn" onclick="document.getElementById('success-modal').classList.remove('open')">Beleza!</button>
+        </div>
+    </div>
 
     <script type="module" src="admin.js"></script>
 </body>
