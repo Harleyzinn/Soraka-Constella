@@ -17,12 +17,12 @@
             <div class="form-group"><label>E-mail</label><input type="email" id="login-email"></div>
             <div class="form-group"><label>Senha</label><input type="password" id="login-password"></div>
             <button class="admin-btn" id="btn-login">Entrar</button>
-            <a href="index.html" style="display:block; margin-top:15px; color:var(--text-color); font-weight:800; text-align:center;">← Voltar ao Cardápio</a>
+            <a href="index.html" style="display:block; margin-top:15px; color:var(--text-color); font-weight:800; text-align:center; text-decoration:none;">← Voltar ao Cardápio</a>
         </div>
 
         <div id="dashboard-screen" style="display:none;">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <a href="index.html" style="font-weight:800; color:var(--text-color);">← Ver Site Público</a>
+                <a href="index.html" style="font-weight:800; color:var(--text-color); text-decoration:none;">← Ver Site Público</a>
                 <button class="admin-btn danger" id="btn-logout" style="width:auto; margin:0; padding:8px 15px;">Sair</button>
             </div>
 
@@ -52,6 +52,12 @@
                     <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco" step="0.01"></div>
                     <div class="form-group"><label>Link Imagem</label><input type="text" id="p-img"></div>
                     <div class="form-group"><label>Descrição</label><textarea id="p-desc" rows="2"></textarea></div>
+                    
+                    <div class="form-group" style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.3); padding:10px; border-radius:12px;">
+                        <input type="checkbox" id="p-esgotado" style="width:20px !important; height:20px;">
+                        <label for="p-esgotado" style="margin:0; cursor:pointer;">Produto Esgotado?</label>
+                    </div>
+
                     <button class="admin-btn" id="btn-save-prod">Salvar Produto</button>
                     <button class="admin-btn danger" id="btn-cancel-prod" style="display:none;" onclick="window.cancelEditProd()">Cancelar Edição</button>
                 </div>
@@ -75,7 +81,7 @@
         <div class="modal-content admin-card">
             <div style="font-size:3rem; margin-bottom:10px;">✨</div>
             <h3 style="font-family:'Emilys Candy'; margin-bottom:10px;">Sucesso!</h3>
-            <p style="margin-bottom:20px; font-weight:700;">Dados atualizados no site.</p>
+            <p style="margin-bottom:20px; font-weight:700;">Dados atualizados.</p>
             <button class="admin-btn" onclick="document.getElementById('success-modal').classList.remove('open')">Beleza!</button>
         </div>
     </div>
