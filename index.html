@@ -1,28 +1,48 @@
-<section class="info-section">
-    <h2 class="info-title">Informações</h2>
-    
-    <div class="info-cards-wrapper"> 
-        <div class="info-card">
-            <h3>Pagamentos</h3>
-            <p>Crédito • PIX • Dinheiro</p>
-        </div>
-        <div class="info-card">
-            <h3>Contato</h3>
-            <p>Beatriz Pereira<br>(11) 95342-5657</p>
-        </div>
-        <div class="info-card">
-            <h3>Chocolate</h3>
-            <p>Trabalhamos com chocolate nobre Sicao e Callebaut.</p>
-        </div>
-        <div class="info-card">
-            <h3>Destaques</h3>
-            <p>Ovos de Colher • Trufas<br>Barras Recheadas</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soraka Constella - Catálogo Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Soraka Constella</h1>
+            <div class="subtitle">Doces Artesanais</div>
+        </header>
+
+        <nav class="category-menu" id="category-filter"></nav>
+
+        <main id="product-list"></main>
+
+        <section class="info-section">
+            <h2 class="info-title">Informações</h2>
+            <div class="info-cards-wrapper"> 
+                <div class="info-card"><h3>Pagamentos</h3><p>Crédito • PIX • Dinheiro</p></div>
+                <div class="info-card"><h3>Contato</h3><p>Beatriz Pereira<br>(11) 95342-5657</p></div>
+                <div class="info-card"><h3>Chocolate</h3><p>Trabalhamos com chocolate nobre Sicao e Callebaut.</p></div>
+                <div class="info-card"><h3>Destaques</h3><p>Ovos de Colher • Trufas<br>Barras Recheadas</p></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; padding-bottom: 30px;">
+                <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Política de Privacidade</a>
+                <span style="margin: 0 15px; opacity: 0.3;">|</span>
+                <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Área do Admin</a>
+            </div>
+        </section>
+    </div>
+
+    <div id="cart-bar" class="cart-bar">
+        <textarea id="order-notes" class="cart-notes-input" placeholder="Alguma observação especial?"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="cart-total">Total: <strong id="total-price">R$ 0,00</strong></div>
+            <a id="checkout-btn" href="#" class="checkout-btn" target="_blank">Finalizar no WhatsApp</a>
         </div>
     </div>
 
-    <div style="text-align: center; margin-top: 50px; padding-bottom: 30px;">
-        <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Política de Privacidade</a>
-        <span style="margin: 0 15px; opacity: 0.3;">|</span>
-        <a href="admin.html" style="color: var(--text-color); font-weight: 800; text-decoration: underline;">Área do Admin</a>
-    </div>
-</section>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
