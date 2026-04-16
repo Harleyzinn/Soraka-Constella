@@ -14,17 +14,31 @@
         </header>
 
         <nav class="category-menu" id="category-filter"></nav>
+        
         <main id="product-list"></main>
 
         <section class="info-section">
             <h2 class="info-title">Informações</h2>
             <div class="info-cards-wrapper"> 
-                <div class="info-card"><h3>Pagamentos</h3><p>Crédito • PIX • Dinheiro</p></div>
-                <div class="info-card"><h3>Contato</h3><p>Beatriz Pereira<br>(11) 95342-5657</p></div>
-                <div class="info-card"><h3>Chocolate</h3><p>Chocolate nobre Sicao e Callebaut.</p></div>
-                <div class="info-card"><h3>Destaques</h3><p>Ovos de Colher • Trufas</p></div>
+                <div class="info-card">
+                    <h3>Pagamentos</h3>
+                    <p id="txt-pagamentos">Carregando...</p>
+                </div>
+                <div class="info-card">
+                    <h3>Contato</h3>
+                    <p id="txt-contato">Carregando...</p>
+                </div>
+                <div class="info-card">
+                    <h3>Chocolate</h3>
+                    <p id="txt-chocolate">Carregando...</p>
+                </div>
+                <div class="info-card">
+                    <h3>Destaques</h3>
+                    <p id="txt-destaques">Carregando...</p>
+                </div>
             </div>
-            <div style="margin: 40px 0; font-size: 0.8rem;">
+            
+            <div style="margin: 40px 0; font-size: 0.8rem; text-align: center;">
                 <a href="politica-privacidade.html" style="color: var(--text-color); font-weight: 800;">Privacidade</a> | 
                 <a href="admin.html" style="color: var(--text-color); font-weight: 800;">Admin</a>
             </div>
@@ -32,10 +46,16 @@
     </div>
 
     <div id="cart-bar" class="cart-bar">
-        <textarea id="order-notes" class="cart-notes-input" placeholder="Alguma observação?"></textarea>
+        <textarea id="order-notes" class="cart-notes-input" placeholder="Alguma observação (ex: nome para tag, restrições)?"></textarea>
+        
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div class="cart-total">Total: <strong id="total-price">R$ 0,00</strong></div>
-            <a id="checkout-btn" href="#" class="checkout-btn">Pedir no WhatsApp</a>
+            <div class="cart-total-info">
+                <span style="font-size: 0.9rem; opacity: 0.9;">Total:</span>
+                <span id="total-price" style="font-size: 1.4rem; font-weight: 800;">R$ 0,00</span>
+            </div>
+            <button class="checkout-btn" onclick="window.sendWhatsApp()">
+                Enviar Pedido 🚀
+            </button>
         </div>
     </div>
 

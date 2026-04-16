@@ -19,6 +19,7 @@ let produtosNaMemoria = [];
 let categoriaAtual = 'Todos';
 
 async function init() {
+    // 1. Carrega as Categorias
     const catMenu = document.getElementById('category-filter');
     catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
     const catSnap = await getDocs(collection(db, "categorias"));
@@ -26,11 +27,23 @@ async function init() {
         catMenu.innerHTML += `<button class="cat-btn" onclick="window.filterCategory('${d.data().nome}')">${d.data().nome}</button>`;
     });
 
+    // 2. Carrega os Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     produtosNaMemoria = prodSnap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderProducts();
+
+    // 3. Carrega as informações do rodapé (A parte nova)
+    const infoSnap = await getDocs(collection(db, "configuracoes"));
+    if (!infoSnap.empty) {
+        const d = infoSnap.docs[0].data();
+        document.getElementById('txt-pagamentos').innerText = d.pagamentos || '';
+        document.getElementById('txt-contato').innerText = d.contato || '';
+        document.getElementById('txt-chocolate').innerText = d.chocolate || '';
+        document.getElementById('txt-destaques').innerText = d.destaques || '';
+    }
 }
 
+// Função que tinha sumido no seu código
 window.filterCategory = (nome) => {
     categoriaAtual = nome;
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.innerText === nome));
@@ -90,7 +103,7 @@ window.updateQty = (id, n) => {
 
 function updateCartUI() {
     let total = 0; 
-    let texto = "Olá Beatriz! Gostaria de fazer um pedido na Soraka Constella:\n\n";
+    let texto = "Olá Mãe! Gostaria de fazer um pedido na Soraka Constella:\n\n";
     Object.values(cart).forEach(i => {
         total += i.preco * i.qty;
         texto += `▪️ ${i.qty}x ${i.nome} - ${(i.preco * i.qty).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;

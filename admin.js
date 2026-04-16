@@ -109,3 +109,44 @@ window.cancelEditProd = () => {
     });
     document.getElementById('btn-cancel-prod').style.display = 'none';
 };
+// ... (mantenha seus imports e configs existentes)
+
+// Carregar informações ao iniciar
+onAuthStateChanged(auth, u => {
+    document.getElementById('login-screen').style.display = u ? 'none' : 'block';
+    document.getElementById('dashboard-screen').style.display = u ? 'block' : 'none';
+    if(u) {
+        loadAll();
+        loadFooterConfig(); // Nova função
+    }
+});
+
+async function loadFooterConfig() {
+    const snap = await getDocs(collection(db, "configuracoes"));
+    if (!snap.empty) {
+        const dados = snap.docs[0].data();
+        document.getElementById('conf-pagamentos').value = dados.pagamentos || '';
+        document.getElementById('conf-contato').value = dados.contato || '';
+        document.getElementById('conf-chocolate').value = dados.chocolate || '';
+        document.getElementById('conf-destaques').value = dados.destaques || '';
+        // Salva o ID para atualizar o mesmo documento depois
+        window.footerConfigId = snap.docs[0].id;
+    }
+}
+
+document.getElementById('btn-save-info').onclick = async () => {
+    const info = {
+        pagamentos: document.getElementById('conf-pagamentos').value,
+        contato: document.getElementById('conf-contato').value,
+        chocolate: document.getElementById('conf-chocolate').value,
+        destaques: document.getElementById('conf-destaques').value
+    };
+
+    if (window.footerConfigId) {
+        await setDoc(doc(db, "configuracoes", window.footerConfigId), info);
+    } else {
+        await addDoc(collection(db, "configuracoes"), info);
+    }
+    showSuccess();
+    loadFooterConfig();
+};
