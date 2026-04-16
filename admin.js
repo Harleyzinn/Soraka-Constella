@@ -74,10 +74,31 @@ async function loadCats() {
         sel.innerHTML += `<option value="${c.nome}">${c.nome}</option>`;
     });
 }
-document.getElementById('btn-add-cat').onclick = async () => { await addDoc(collection(db, "categorias"), {nome: document.getElementById('cat-nome').value}); document.getElementById('cat-nome').value=''; loadCats(); showSuccess(); };
+
+document.getElementById('btn-add-cat').onclick = async (e) => { 
+    e.target.disabled = true;
+    e.target.innerText = "Adicionando...";
+    await addDoc(collection(db, "categorias"), {nome: document.getElementById('cat-nome').value}); 
+    document.getElementById('cat-nome').value=''; 
+    loadCats(); 
+    showSuccess(); 
+    e.target.disabled = false;
+    e.target.innerText = "Adicionar Categoria";
+};
+
 window.editCat = (id, n) => { document.getElementById('form-cat-add').style.display='none'; document.getElementById('form-cat-edit').style.display='block'; document.getElementById('edit-cat-id').value=id; document.getElementById('edit-cat-nome').value=n; };
 window.cancelEditCat = () => { document.getElementById('form-cat-add').style.display='block'; document.getElementById('form-cat-edit').style.display='none'; };
-document.getElementById('btn-save-cat').onclick = async () => { await setDoc(doc(db, "categorias", document.getElementById('edit-cat-id').value), {nome: document.getElementById('edit-cat-nome').value}); window.cancelEditCat(); loadCats(); showSuccess(); };
+
+document.getElementById('btn-save-cat').onclick = async (e) => { 
+    e.target.disabled = true;
+    e.target.innerText = "Salvando...";
+    await setDoc(doc(db, "categorias", document.getElementById('edit-cat-id').value), {nome: document.getElementById('edit-cat-nome').value}); 
+    window.cancelEditCat(); 
+    loadCats(); 
+    showSuccess(); 
+    e.target.disabled = false;
+    e.target.innerText = "Salvar";
+};
 
 // PRODUTOS
 async function loadProds() {
@@ -95,7 +116,10 @@ async function loadProds() {
             </div>`;
     });
 }
-document.getElementById('btn-save-prod').onclick = async () => {
+
+document.getElementById('btn-save-prod').onclick = async (e) => {
+    e.target.disabled = true;
+    e.target.innerText = "Salvando...";
     const id = document.getElementById('edit-prod-id').value;
     const p = { 
         nome: document.getElementById('p-nome').value, 
@@ -103,11 +127,16 @@ document.getElementById('btn-save-prod').onclick = async () => {
         preco: parseFloat(document.getElementById('p-preco').value), 
         img: document.getElementById('p-img').value, 
         desc: document.getElementById('p-desc').value,
-        esgotado: document.getElementById('p-esgotado').checked // NOVO
+        esgotado: document.getElementById('p-esgotado').checked 
     };
     if(id) await setDoc(doc(db, "produtos", id), p); else await addDoc(collection(db, "produtos"), p);
-    window.cancelEditProd(); loadProds(); showSuccess();
+    window.cancelEditProd(); 
+    loadProds(); 
+    showSuccess();
+    e.target.disabled = false;
+    e.target.innerText = "Salvar Produto";
 };
+
 window.editProd = async (id) => {
     const snap = await getDocs(collection(db, "produtos"));
     const p = snap.docs.find(x => x.id === id).data();
@@ -117,10 +146,11 @@ window.editProd = async (id) => {
     document.getElementById('p-preco').value = p.preco;
     document.getElementById('p-img').value = p.img;
     document.getElementById('p-desc').value = p.desc;
-    document.getElementById('p-esgotado').checked = p.esgotado || false; // NOVO
+    document.getElementById('p-esgotado').checked = p.esgotado || false; 
     document.getElementById('btn-cancel-prod').style.display = 'block';
     window.scrollTo(0,0);
 };
+
 window.cancelEditProd = () => {
     document.getElementById('edit-prod-id').value = '';
     document.querySelectorAll('#form-prod-box input, #form-prod-box textarea').forEach(i => {
@@ -129,7 +159,7 @@ window.cancelEditProd = () => {
     document.getElementById('btn-cancel-prod').style.display = 'none';
 };
 
-// INFORMAÇÕES DO RODAPÉ (NOVO)
+// INFORMAÇÕES DO RODAPÉ 
 async function loadFooterConfig() {
     const snap = await getDocs(collection(db, "configuracoes"));
     if (!snap.empty) {
@@ -142,7 +172,9 @@ async function loadFooterConfig() {
     }
 }
 
-document.getElementById('btn-save-info').onclick = async () => {
+document.getElementById('btn-save-info').onclick = async (e) => {
+    e.target.disabled = true;
+    e.target.innerText = "Salvando...";
     const info = {
         pagamentos: document.getElementById('conf-pagamentos').value,
         contato: document.getElementById('conf-contato').value,
@@ -157,4 +189,6 @@ document.getElementById('btn-save-info').onclick = async () => {
     }
     showSuccess();
     loadFooterConfig();
+    e.target.disabled = false;
+    e.target.innerText = "Atualizar Informações";
 };
