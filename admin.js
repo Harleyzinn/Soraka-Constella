@@ -20,13 +20,32 @@ let idApagar = ""; let colApagar = "";
 onAuthStateChanged(auth, u => {
     document.getElementById('login-screen').style.display = u ? 'none' : 'block';
     document.getElementById('dashboard-screen').style.display = u ? 'block' : 'none';
-    if(u) loadAll();
+    if(u) {
+        loadAll();
+        loadFooterConfig();
+    }
 });
 
 function loadAll() { loadCats(); loadProds(); }
 function showSuccess() { document.getElementById('success-modal').classList.add('open'); }
 
-document.getElementById('btn-login').onclick = () => signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
+document.getElementById('btn-login').onclick = () => {
+    const email = document.getElementById('login-email').value;
+    const senha = document.getElementById('login-password').value;
+    
+    signInWithEmailAndPassword(auth, email, senha)
+        .catch(erro => {
+            console.error(erro);
+            if (erro.code === 'auth/invalid-credential' || erro.code === 'auth/user-not-found' || erro.code === 'auth/wrong-password') {
+                alert("E-mail ou senha incorretos!");
+            } else if (erro.code === 'auth/invalid-email') {
+                alert("Formato de e-mail inválido!");
+            } else {
+                alert("Erro ao logar: " + erro.message);
+            }
+        });
+};
+
 document.getElementById('btn-logout').onclick = () => signOut(auth);
 
 // MODAL DELETE
@@ -109,18 +128,8 @@ window.cancelEditProd = () => {
     });
     document.getElementById('btn-cancel-prod').style.display = 'none';
 };
-// ... (mantenha seus imports e configs existentes)
 
-// Carregar informações ao iniciar
-onAuthStateChanged(auth, u => {
-    document.getElementById('login-screen').style.display = u ? 'none' : 'block';
-    document.getElementById('dashboard-screen').style.display = u ? 'block' : 'none';
-    if(u) {
-        loadAll();
-        loadFooterConfig(); // Nova função
-    }
-});
-
+// INFORMAÇÕES DO RODAPÉ (NOVO)
 async function loadFooterConfig() {
     const snap = await getDocs(collection(db, "configuracoes"));
     if (!snap.empty) {
@@ -129,7 +138,6 @@ async function loadFooterConfig() {
         document.getElementById('conf-contato').value = dados.contato || '';
         document.getElementById('conf-chocolate').value = dados.chocolate || '';
         document.getElementById('conf-destaques').value = dados.destaques || '';
-        // Salva o ID para atualizar o mesmo documento depois
         window.footerConfigId = snap.docs[0].id;
     }
 }
