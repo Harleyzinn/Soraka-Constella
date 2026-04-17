@@ -46,18 +46,15 @@
     </div>
 
     <div id="cart-bar" class="cart-bar">
-        <textarea id="order-notes" class="cart-notes-input" placeholder="Alguma observação (ex: nome para tag, restrições)?"></textarea>
-        
+        <textarea id="order-notes" class="cart-notes-input" placeholder="Alguma observação?"></textarea>
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div class="cart-total-info">
-                <span style="font-size: 0.9rem; opacity: 0.9;">Total:</span>
-                <span id="total-price" style="font-size: 1.4rem; font-weight: 800;">R$ 0,00</span>
-            </div>
-            <button class="checkout-btn" onclick="window.sendWhatsApp()">
-                Enviar Pedido 🚀
+            <div class="cart-total">Total: <strong id="total-price">R$ 0,00</strong></div>
+            <button onclick="window.sendWhatsApp()" class="checkout-btn" style="border:none; cursor:pointer;">
+                Pedir no WhatsApp 🚀 
             </button>
         </div>
     </div>
+    
 
     <script type="module" src="app.js"></script>
 </body>
