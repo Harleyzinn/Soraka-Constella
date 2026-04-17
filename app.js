@@ -14,12 +14,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const cart = {};
-const phone = "5511953425657";
+const phone = "5511978174037"; // Número atualizado!
 let produtosNaMemoria = [];
 let categoriaAtual = 'Todos';
 
 async function init() {
-    // 1. Carrega as Categorias
     const catMenu = document.getElementById('category-filter');
     catMenu.innerHTML = `<button class="cat-btn active" onclick="window.filterCategory('Todos')">Todos</button>`;
     const catSnap = await getDocs(collection(db, "categorias"));
@@ -27,12 +26,10 @@ async function init() {
         catMenu.innerHTML += `<button class="cat-btn" onclick="window.filterCategory('${d.data().nome}')">${d.data().nome}</button>`;
     });
 
-    // 2. Carrega os Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     produtosNaMemoria = prodSnap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderProducts();
 
-    // 3. Carrega as informações do rodapé (A parte nova)
     const infoSnap = await getDocs(collection(db, "configuracoes"));
     if (!infoSnap.empty) {
         const d = infoSnap.docs[0].data();
@@ -43,7 +40,6 @@ async function init() {
     }
 }
 
-// Função que tinha sumido no seu código
 window.filterCategory = (nome) => {
     categoriaAtual = nome;
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.innerText === nome));
@@ -103,22 +99,35 @@ window.updateQty = (id, n) => {
 
 function updateCartUI() {
     let total = 0; 
-    let texto = "Olá Mãe! Gostaria de fazer um pedido na Soraka Constella:\n\n";
     Object.values(cart).forEach(i => {
         total += i.preco * i.qty;
-        texto += `▪️ ${i.qty}x ${i.nome} - ${(i.preco * i.qty).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
     });
 
     const bar = document.getElementById('cart-bar');
     if(total > 0) {
         bar.classList.add('visible');
         document.getElementById('total-price').innerText = total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
-        const notas = document.getElementById('order-notes').value;
-        if(notas) texto += `\n*Observações:* ${notas}`;
-        texto += `\n\n*Total: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
-        document.getElementById('checkout-btn').href = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
     } else {
         bar.classList.remove('visible');
     }
 }
+
+// ESTA FUNÇÃO É A QUE O SEU HTML CHAMA NO BOTÃO!
+window.sendWhatsApp = () => {
+    let total = 0;
+    let texto = "Olá! Gostaria de fazer um pedido na Soraka Constella:\n\n";
+    
+    Object.values(cart).forEach(i => {
+        total += i.preco * i.qty;
+        texto += `▪️ ${i.qty}x ${i.nome} - ${(i.preco * i.qty).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}\n`;
+    });
+
+    const notas = document.getElementById('order-notes').value;
+    if(notas) texto += `\n*Observações:* ${notas}`;
+    texto += `\n\n*Total: ${total.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}*`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(texto)}`, '_blank');
+};
+
 window.addEventListener('DOMContentLoaded', init);
+        
